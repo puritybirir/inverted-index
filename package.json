@@ -1,0 +1,22 @@
+{
+  "name": "inverted-index",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".jshintsrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andela-pbirir/inverted-index.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andela-pbirir/inverted-index/issues"
+  },
+  "homepage": "https://github.com/andela-pbirir/inverted-index#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
