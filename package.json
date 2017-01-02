@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/andela-pbirir/inverted-index#readme",
   "devDependencies": {
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "gulp-uglify": "^2.0.0"
   }
 }
