@@ -1,31 +1,19 @@
 var gulp = require('gulp');
-    uglify=require('gulp-uglify'),
-    sass=require('sass')
+    uglify=require('gulp-uglify')
     ;
 
 //Scripts task
-//Uglifies.
 gulp.task('scripts', function(){
-    gulp.src('src/*.js')
-    .pipe(uglify())
-    .pipe(gulp.dest('build/js'))
-});
-
-//Styles task
-//Uglifies
-gulp.task('styles', function(){
-    gulp.src('src/sass/**/*.scss')
-    .pipe(sass())
-    .pipe(gulp.dest('css/'))
-
+    gulp.src('src/js/**/*.js')
+    .pipe(gulp.dest('src/js'));
 });
 
 //Watch task
 //Watches js
 gulp.task('watch', function(){
-    gulp.watch('src/*.js',['scripts'])
+    gulp.watch('src/js/**/*.js',['scripts'])
 });
 
-
-gulp.task('default', ['scripts','styles','watch']);
+//Default task that runs all the scripts at the same time
+gulp.task('default', ['scripts','watch']);
    
