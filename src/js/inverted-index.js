@@ -67,7 +67,7 @@ class Index {
 				//we loop through the indices to find the index that matches the file path 
 				if (index.filePath == filePath) {
 					return(index.toSource());
-					break;
+					
 				}
 				//when the index is gotten, it is returned and the loop breaks
 			}
@@ -119,16 +119,14 @@ class Index {
 										//we loop through the indices to get the index where the term is defined
 										if (index[z.toLowerCase()] != undefined) {
 											//when we get an index, its file path and the position(s) are returned
-											return(index['filePath']);
-											return(index[z.toLowerCase()]);
+											return(index['filePath']+": "+index[z.toLowerCase()]);
 										}
 									}
 								}
 							} else {
 								for (const index of this.indexArray) {
 									if (index[y.toLowerCase()] != undefined) {
-										return(index['filePath']);
-										return(index[y.toLowerCase()]);
+										return(index['filePath']+": "+index[y.toLowerCase()]);
 									}
 								}
 							}
@@ -136,8 +134,7 @@ class Index {
 					} else {
 						for (const index of this.indexArray) {
 							if (index[x.toLowerCase()] != undefined) {
-								return(index['filePath']);
-								return(index[x.toLowerCase()]);
+								return(index['filePath']+": "+index[x.toLowerCase()]);
 							}
 						}
 					}
