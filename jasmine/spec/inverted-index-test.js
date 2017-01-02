@@ -30,7 +30,7 @@ describe ("Populate Index",function(){
 		it("index maps string keys to correct obj", function(){
 			
 			var myFunction= function() {
-				var testArray=['a':'1'];
+				var testArray=['a','1'];
 				var a=createIndex(testArray);
 				var b=getIndex(a);
 				return b;
@@ -41,7 +41,7 @@ describe ("Populate Index",function(){
 });
 describe ("Search Index", function(){
 	beforeEach(function(){
-		var testArray=["a";"b";"c"];
+		var testArray=["a","b","c"];
 
 		var mySearchIndex= searchIndex(testArray);
 
