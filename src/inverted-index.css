@@ -1,29 +1,9 @@
-body{
-    font-family: arial;
-    font-size:18px;
-    color:#333;
-    margin: 0;
-    padding:0;
-}
+first-class {
+  color: #f00;
+  font-family: sans-serif;
+  text-decoration: underline; }
 
-header{
-    height:130px;
-    padding-top:40px;
-    background:#f4f4f4;
-    text-align: center;
-    border-bottom: #333 3px solid;
+.second-class {
+  border-color: #fff; }
 
-}
-
-h1#heading{
-    margin: 0;
-    padding: 0;
-}
-
-#container{
-    width:960px;
-    margin:20px auto;
-    padding: 20px;
-    overflow:auto;
-
-}
+/*# sourceMappingURL=inverted-index.css.map */
