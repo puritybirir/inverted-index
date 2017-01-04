@@ -42,7 +42,6 @@ describe ("Populate Index",function(){
 describe ("Search Index", function(){
 	beforeEach(function(){
 		var testArray=["a","b","c"];
-
 		var mySearchIndex= searchIndex(testArray);
 
 	});
