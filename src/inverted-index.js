@@ -11,6 +11,8 @@ class Index {
 		//getting the actual file
 		var reader = new FileReader();
 		//an instance of the FileReader class is created to read the contents of the file
+		reader.readAsText(file);
+		//the reader reads the file and returns a string of the content
 		reader.onloadend = () => {
 			//what happens after reading the file; we make it an arrow function so as to access the class level index array
 			var json = JSON.parse(reader.result);
@@ -62,11 +64,11 @@ class Index {
 				display.innerText = 'Index created';
 			}			
 		}
-		reader.readAsText(file);
-		//the reader reads the file and returns a string of the content
+		
 	}
 
 	getIndex(filePath) {
+		display.innerText=this.indexArray.toSource();
 		//getIndex method takes the JSON file path as the argument
 		if (this.indexArray.length != 0) {
 			//continues if the index array has content
@@ -153,6 +155,7 @@ class Index {
 				}
 			}
 			display.innerText = results;
+			console.log(results);
 		}
 	}
 }
@@ -166,11 +169,12 @@ window.onload = () => {
 	var searchButton = document.getElementById('searchButton');
 	var display = document.getElementById('display');
 
-	createIndexButton.addEventListener('click', function(e) {
+	createIndexButton.addEventListener('click', () =>{
 		instance.createIndex(filePath);
 	});
 
-	searchButton.addEventListener('click', function(e) {
+	searchButton.addEventListener('click', () => {
 		instance.searchIndex(terms.value);
+		//instance.getIndex(terms.value);
 	});
 }
