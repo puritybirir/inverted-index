@@ -1,53 +1,46 @@
-describe ("Read book data",function(){
-
-	it("assert JSON file is not empty",function(){
-		var isNotEmpty = function IsJsonString(filePath) {
-    		try {
-        		JSON.parse(filePath);
-    		} catch (e) {
-        		return false;
-    		}
-    			return true;
-			};
-		expect(isNotEmpty).toBe(true).because('The JSON file should be a valid JSON array');
+describe("Read book data", function() {
+	beforeEach(function(){		
+		var file = filePath.files[0];		
+		var reader = new FileReader();
 	});
+	it("assert JSON file is not empty",function(){
+
+		var fileNotEmpty = JSON.parse(reader.result);
+		var fileNotEmptyResult = function(fileNotEmpty){
+			if (fileNotEmpty = null){
+				return false;
+			}
+			else{
+				return true;
+			}
+		};
+
+		expect(fileNotEmptyResult).toBe(true);
+	});
+	
+
 });
 
-describe ("Populate Index",function(){
+describe("Populate Index", function(){
 	beforeEach(function() {
 
-		var myIndexPopulate=JSON.parse(filePath);
-		var myIndexGet=getIndex(myIndexPopulate);
-
-	
+		checkEmpty = new createIndex();
+		//test using spies to check if methods are exectued
+		spyOn(checkEmpty, 'push');
 	});
-		it("index should be created after reading",function(){
-
-			
-			expect(myIndexGet).not.toBe(null).because('Index should be created after reading the file');
-
-		});
-		it("index maps string keys to correct obj", function(){
-			
-			var myFunction= function() {
-				var testArray=['a','1'];
-				var a=createIndex(testArray);
-				var b=getIndex(a);
-				return b;
-			}
-			expect(myFunction).toBe(['a']).because('Index should return corresponding key');
-
-		});
-});
-describe ("Search Index", function(){
-	beforeEach(function(){
-		var testArray=["a","b","c"];
-		var mySearchIndex= searchIndex(testArray);
-
-	});
-	it("searching should returns array of correct indices", function(){
+	it('should have called and created this function', function(){
 		
-		expect(mySearchIndex).toContain("a","b","c");
+		//calling the function to see if the code has been executed
+		checkempty.push(term);
+		
+		expect(checkEmpty.push).toHaveBeenCalled();
+		//because if this method is called the index has been created.
 	});
+	it("should map string keys to correct objects", function(){
+		//calling function to see if it is executed in code
+		
+		expect(display.innerText).toBe('Index Created');
+	});
+});
 
-})
+
