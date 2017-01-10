@@ -1,0 +1,14 @@
+@import 'bootstrap.min.css';
+.header-bg {
+    background: #4ABDAC;
+    color: white;
+}
+
+.left-side {
+    background: #4ABDAC;
+}
+
+body {
+    background: #4ABDAC;
+    color: #DFDCE3;
+}
