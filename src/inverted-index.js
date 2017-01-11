@@ -1,6 +1,17 @@
+/**
+ * InvertedIndex Class
+ * @class
+ */
+
 class Index {
+
+    /**
+     * class constructor
+     * @constructor
+     */
     constructor() {
         this.indexArray = [];
+        this.json = '';
     }
 
     createIndex(filePath) {
@@ -45,6 +56,11 @@ class Index {
                 }
                 this.indexArray.push(index);
                 display.innerText = 'Index created';
+                // console.log(indexTerms);
+                console.log(json);
+
+
+
             }
         }
         reader.readAsText(file);
@@ -85,7 +101,9 @@ class Index {
                 }
             }
             display.innerText = results;
+            console.log(results);
         }
+
     }
 }
 
