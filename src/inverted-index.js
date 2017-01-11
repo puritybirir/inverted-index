@@ -56,8 +56,6 @@ class Index {
                 }
                 this.indexArray.push(index);
                 display.innerText = 'Index created';
-                // console.log(indexTerms);
-                console.log(json);
 
 
 
@@ -101,26 +99,7 @@ class Index {
                 }
             }
             display.innerText = results;
-            console.log(results);
         }
 
     }
-}
-
-window.onload = () => {
-    let instance = new Index();
-
-    let filePath = document.getElementById('filePath');
-    const createIndexButton = document.getElementById('createIndexButton');
-    const terms = document.getElementById('terms');
-    const searchButton = document.getElementById('searchButton');
-    const display = document.getElementById('display');
-
-    createIndexButton.addEventListener('click', function(e) {
-        instance.createIndex(filePath);
-    });
-
-    searchButton.addEventListener('click', function(e) {
-        instance.searchIndex(terms.value);
-    });
 }
