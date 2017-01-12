@@ -1,14 +1,14 @@
 window.onload = () => {
-    let instance = new Index();
+    var instance = new Index();
 
-    let filePath = document.getElementById('filePath');
-    const createIndexButton = document.getElementById('createIndexButton');
-    const terms = document.getElementById('terms');
-    const searchButton = document.getElementById('searchButton');
-    const display = document.getElementById('display');
+    var filePath = document.getElementById('filePath');
+    var createIndexButton = document.getElementById('createIndexButton');
+    var terms = document.getElementById('terms');
+    var searchButton = document.getElementById('searchButton');
+    var display = document.getElementById('display');
 
     createIndexButton.addEventListener('click', function(e) {
-        instance.createIndex(filePath);
+        instance.createIndex(filePath.files[0]);
     });
 
     searchButton.addEventListener('click', function(e) {

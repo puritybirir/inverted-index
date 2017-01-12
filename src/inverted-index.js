@@ -1,26 +1,14 @@
-/**
- * InvertedIndex Class
- * @class
- */
-
 class Index {
-
-    /**
-     * class constructor
-     * @constructor
-     */
     constructor() {
         this.indexArray = [];
-        this.json = '';
     }
 
-    createIndex(filePath) {
-        let file = filePath.files[0];
-        let reader = new FileReader();
+    createIndex(file) {
+        var reader = new FileReader();
         reader.onloadend = () => {
-            let json = JSON.parse(reader.result);
+            var json = JSON.parse(reader.result);
             if (json != null) {
-                let indexTerms = [];
+                var indexTerms = [];
                 for (let object of json) {
                     for (let key in object) {
                         if (object.hasOwnProperty(key)) {
@@ -35,11 +23,11 @@ class Index {
                     }
                 }
 
-                let index = {};
-                index['filePath'] = filePath.value;
+                var index = {};
+                index['file'] = file.name;
                 for (let indexTerm of indexTerms) {
-                    let objects = [];
-                    let i = 0;
+                    var objects = [];
+                    var i = 0;
                     for (let object of json) {
                         for (let key in object) {
                             if (object.hasOwnProperty(key)) {
@@ -56,18 +44,15 @@ class Index {
                 }
                 this.indexArray.push(index);
                 display.innerText = 'Index created';
-
-
-
             }
         }
         reader.readAsText(file);
     }
 
-    getIndex(filePath) {
+    getIndex(file) {
         if (this.indexArray.length != 0) {
             for (let index of this.indexArray) {
-                if (index.filePath == filePath) {
+                if (index.file == file) {
                     display.innerText = index.toSource();
                 }
             }
@@ -76,11 +61,11 @@ class Index {
 
     searchIndex(terms) {
         if (this.indexArray.length != 0) {
-            let results = [];
-            let tokens = terms.split(/\s*(,|\s)\s*/);
+            var results = [];
+            var tokens = terms.split(/\s*(,|\s)\s*/);
             if (tokens[0].indexOf('.json') > -1) {
                 for (let index of this.indexArray) {
-                    if (index.filePath == tokens[0]) {
+                    if (index.file == tokens[0]) {
                         var indexToUse = index;
                         break;
                     }
@@ -93,13 +78,30 @@ class Index {
                 for (let token of tokens) {
                     for (let index of this.indexArray) {
                         if (index[token.toLowerCase()] != undefined) {
-                            results.push(index['filePath'] + " : " + index[token.toLowerCase()]);
+                            results.push(index['file'] + " : " + index[token.toLowerCase()]);
                         }
                     }
                 }
             }
             display.innerText = results;
         }
-
     }
+}
+
+window.onload = () => {
+    var instance = new Index();
+
+    var filePath = document.getElementById('filePath');
+    var createIndexButton = document.getElementById('createIndexButton');
+    var terms = document.getElementById('terms');
+    var searchButton = document.getElementById('searchButton');
+    var display = document.getElementById('display');
+
+    createIndexButton.addEventListener('click', function(e) {
+        instance.createIndex(filePath.files[0]);
+    });
+
+    searchButton.addEventListener('click', function(e) {
+        instance.searchIndex(terms.value);
+    });
 }
