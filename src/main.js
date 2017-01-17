@@ -8,8 +8,9 @@ window.onload = () => {
     var display = document.getElementById('display');
 
     createIndexButton.addEventListener('click', function(e) {
-        instance.createIndex(filePath.files[0]);
+        var indexArray = instance.createIndex(filePath.files[0]);
     });
+
 
     searchButton.addEventListener('click', function(e) {
         instance.searchIndex(terms.value);
