@@ -1,31 +1,10 @@
-const myDoc = [{
-        "title": "Alice in Wonderland",
-        "text": "Alice falls into a rabbit hole and enters a world full of imagination."
-    },
-
-    {
-        "title": "The Lord of the Rings: The Fellowship of the Ring.",
-        "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
-    }
-]
-
 describe("Read book data", function() {
     beforeEach(function() {
-        var file = filePath.files[0];
+        var file = file.files[0];
         var reader = new FileReader();
     });
     it("assert JSON file is not empty", function() {
-
-        var fileNotEmpty = JSON.parse(reader.result);
-        var fileNotEmptyResult = function(fileNotEmpty) {
-            if (fileNotEmpty = null) {
-                return false;
-            } else {
-                return true;
-            }
-        };
-
-        expect(fileNotEmptyResult).toBe(true);
+        expect(file).not.toBe(null);
     });
 
 
