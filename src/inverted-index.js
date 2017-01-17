@@ -12,9 +12,9 @@ class Index {
                 for (let object of json) {
                     for (let key in object) {
                         if (object.hasOwnProperty(key)) {
-                            let string = object[key].toLowerCase();
-                            let terms = string.split(/\W+/);
+                            let terms = object[key].toLowerCase().split(/\W+/);
                             for (let term of terms) {
+                                //pushes a term into indexTerms array if the terms is not present
                                 if (indexTerms.indexOf(term) < 0) {
                                     indexTerms.push(term);
                                 }
@@ -24,15 +24,14 @@ class Index {
                 }
 
                 var index = {};
-                index['file'] = file.name;
+                //index['file'] = file.name;
                 for (let indexTerm of indexTerms) {
                     var objects = [];
                     var i = 0;
                     for (let object of json) {
                         for (let key in object) {
                             if (object.hasOwnProperty(key)) {
-                                let string = object[key].toLowerCase();
-                                let terms = string.split(/\W+/);
+                                let terms = object[key].toLowerCase().split(/\W+/);
                                 if (terms.indexOf(indexTerm) > -1 & objects.indexOf(i) < 0) {
                                     objects.push(i);
                                 }
@@ -43,8 +42,16 @@ class Index {
                     index[indexTerm] = objects;
                 }
                 this.indexArray.push(index);
+                //console.log(index)
                 display.innerText = 'Index created';
+
+                for (let [key, value] of Object.entries(index)) {
+                    termstable.innerHTML = termstable.innerHTML + '<tr><td>' + key + '</td>' + (value.includes(0) ?
+                            '<td> <i class="glyphicon glyphicon-ok"></i> </td>' : ' <td></td>') +
+                        (value.includes(1) ? '<td><i class="glyphicon glyphicon-remove"></i></td>' : '<td></td>') + '</tr>';
+                }
             }
+
         }
         reader.readAsText(file);
     }
@@ -59,49 +66,36 @@ class Index {
         }
     }
 
-    searchIndex(terms) {
+    searchIndex(valuesToSearch) {
         if (this.indexArray.length != 0) {
             var results = [];
-            var tokens = terms.split(/\s*(,|\s)\s*/);
+            var tokens = valuesToSearch.split(/\s*(,|\s)\s*/);
             if (tokens[0].indexOf('.json') > -1) {
                 for (let index of this.indexArray) {
                     if (index.file == tokens[0]) {
                         var indexToUse = index;
                         break;
+
                     }
                 }
                 tokens.shift();
                 for (let token of tokens) {
                     results.push(indexToUse[token.toLowerCase()]);
+
                 }
             } else {
                 for (let token of tokens) {
                     for (let index of this.indexArray) {
                         if (index[token.toLowerCase()] != undefined) {
                             results.push(index['file'] + " : " + index[token.toLowerCase()]);
+
                         }
                     }
                 }
             }
             display.innerText = results;
+
         }
+
     }
-}
-
-window.onload = () => {
-    var instance = new Index();
-
-    var filePath = document.getElementById('filePath');
-    var createIndexButton = document.getElementById('createIndexButton');
-    var terms = document.getElementById('terms');
-    var searchButton = document.getElementById('searchButton');
-    var display = document.getElementById('display');
-
-    createIndexButton.addEventListener('click', function(e) {
-        instance.createIndex(filePath.files[0]);
-    });
-
-    searchButton.addEventListener('click', function(e) {
-        instance.searchIndex(terms.value);
-    });
 }
