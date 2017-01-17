@@ -18,6 +18,10 @@
   "homepage": "https://github.com/andela-pbirir/inverted-index#readme",
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-plumber": "^1.1.0",
     "gulp-uglify": "^2.0.0"
+  },
+  "dependencies": {
+    "gulp-livereload": "^3.8.1"
   }
 }
