@@ -1,5 +1,6 @@
 # inverted-index
 [![Build Status](https://travis-ci.org/andela-pbirir/inverted-index.svg?branch=develop)](https://travis-ci.org/andela-pbirir/inverted-index)
+[![Coverage Status](https://coveralls.io/repos/github/andela-pbirir/inverted-index/badge.svg?branch=testfix)](https://coveralls.io/github/andela-pbirir/inverted-index?branch=testfix)
 # Inverted Index
 ## Introduction
 
