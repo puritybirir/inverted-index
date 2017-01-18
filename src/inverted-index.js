@@ -7,18 +7,18 @@ class Index {
         reader.readAsText(file);
         reader.onload = () => {
             var json = JSON.parse(reader.result);
-            this.createIndex(json);
+            this.displayIndex(json);
+            this.json = json;
         }
     }
 
     createIndex(json) {
-        console.log('CONtent', json);
         if (json != null) {
             var indexTerms = [];
             for (let object of json) {
                 for (let key in object) {
                     if (object.hasOwnProperty(key)) {
-                        let terms = object[key].toLowerCase().split(/\W+/);
+                        let terms = object[key].toLowerCase().split(/\W+/g);
                         for (let term of terms) {
                             //pushes a term into indexTerms array if the terms is not present
                             if (indexTerms.indexOf(term) < 0) {
@@ -30,14 +30,13 @@ class Index {
             }
 
             var index = {};
-            //index['file'] = file.name;
             for (let indexTerm of indexTerms) {
                 var objects = [];
                 var i = 0;
                 for (let object of json) {
                     for (let key in object) {
                         if (object.hasOwnProperty(key)) {
-                            let terms = object[key].toLowerCase().split(/\W+/);
+                            let terms = object[key].toLowerCase().split(/\W+/g);
                             if (terms.indexOf(indexTerm) > -1 & objects.indexOf(i) < 0) {
                                 objects.push(i);
                             }
@@ -48,15 +47,22 @@ class Index {
                 index[indexTerm] = objects;
             }
             this.indexArray.push(index);
-            // display.innerText = 'Index created';
-            // alert('index created');
-            for (let [key, value] of Object.entries(index)) {
-                termstable.innerHTML = termstable.innerHTML + '<tr><td>' + key + '</td>' + (value.includes(0) ?
-                        '<td> <i class="glyphicon glyphicon-remove"></i> </td>' : ' <td></td>') +
-                    (value.includes(1) ? '<td><i class="glyphicon glyphicon-remove"></i></td>' : '<td></td>') + '</tr>';
-            }
         }
     }
+
+    displayIndex(json) {
+        this.createIndex(json);
+        let createdIndex = this.indexArray;
+        let toBeDisplayed = createdIndex.shift();
+        console.log(toBeDisplayed);
+        for (let [key, value] of Object.entries(toBeDisplayed)) {
+            termstable.innerHTML = termstable.innerHTML + '<tr><td>' + key + '</td>' + (value.includes(0) ?
+                    '<td> <i class="glyphicon glyphicon-remove"></i> </td>' : ' <td></td>') +
+                (value.includes(1) ? '<td><i class="glyphicon glyphicon-remove"></i></td>' : '<td></td>') + '</tr>';
+        }
+
+    }
+
 
     getIndex(file) {
         if (this.indexArray.length != 0) {
@@ -69,8 +75,9 @@ class Index {
     }
 
     searchIndex(valuesToSearch) {
+        this.createIndex(this.json);
         if (this.indexArray.length != 0) {
-            var results = [];
+            var results = {};
             var tokens = valuesToSearch.split(/\s*(,|\s)\s*/);
             if (tokens[0].indexOf('.json') > -1) {
                 for (let index of this.indexArray) {
@@ -82,22 +89,31 @@ class Index {
                 }
                 tokens.shift();
                 for (let token of tokens) {
-                    results.push(indexToUse[token.toLowerCase()]);
+                    results[token] = indexToUse[token.toLowerCase()];
 
                 }
             } else {
                 for (let token of tokens) {
                     for (let index of this.indexArray) {
                         if (index[token.toLowerCase()] != undefined) {
-                            results.push(index['file'] + " : " + index[token.toLowerCase()]);
-
+                            results[token] = index[token.toLowerCase()];
                         }
                     }
                 }
             }
-            display.innerText = results;
 
+            return results;
         }
+    }
+
+    displaySearch(valuesToSearch) {
+        let searchResults = this.searchIndex(valuesToSearch);
+        for (let [key, value] of Object.entries(searchResults)) {
+            termstable.innerHTML = '<tr> <th> <h2>Words</h2> </th> <th> <h2>Document one</h2> </th> <th> <h2>Document Two</h2> </th> </tr> <tr><td>' + key + '</td>' + (value.includes(0) ?
+                    '<td> <i class="glyphicon glyphicon-remove"></i> </td>' : ' <td></td>') +
+                (value.includes(1) ? '<td><i class="glyphicon glyphicon-remove"></i></td>' : '<td></td>') + '</tr>';
+        }
+
     }
 
 
