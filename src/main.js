@@ -13,6 +13,6 @@ window.onload = () => {
 
 
     searchButton.addEventListener('click', function(e) {
-        instance.searchIndex(terms.value);
+        instance.displaySearch(terms.value);
     });
 }
