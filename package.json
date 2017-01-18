@@ -1,34 +1,35 @@
 {
-    "name": "inverted-index",
-    "version": "1.0.0",
-    "description": "",
-    "main": ".jshintsrc.js",
-    "scripts": {
-        "test": "node_modules/karma/bin/karma start karma.conf.js --single-run",
-        "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/andela-pbirir/inverted-index.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/andela-pbirir/inverted-index/issues"
-    },
-    "homepage": "https://github.com/andela-pbirir/inverted-index#readme",
-    "devDependencies": {
-        "gulp": "^3.9.1",
-        "gulp-plumber": "^1.1.0",
-        "gulp-uglify": "^2.0.0"
-    },
-    "dependencies": {
-        "coveralls": "^2.11.15",
-        "gulp-jasmine": "^2.4.2",
-        "gulp-livereload": "^3.8.1",
-        "istanbul": "^0.4.5",
-        "jasmine-core": "^2.5.2",
-        "karma": "^1.4.0",
-        "karma-jasmine": "^1.1.0"
-    }
+  "name": "inverted-index",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".jshintsrc.js",
+  "scripts": {
+    "test": "node_modules/karma/bin/karma start karma.conf.js --single-run",
+    "coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andela-pbirir/inverted-index.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andela-pbirir/inverted-index/issues"
+  },
+  "homepage": "https://github.com/andela-pbirir/inverted-index#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-uglify": "^2.0.0"
+  },
+  "dependencies": {
+    "coveralls": "^2.11.15",
+    "gulp-jasmine": "^2.4.2",
+    "gulp-livereload": "^3.8.1",
+    "istanbul": "^0.4.5",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.4.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0"
+  }
 }
