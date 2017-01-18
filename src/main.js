@@ -8,7 +8,7 @@ window.onload = () => {
     var display = document.getElementById('display');
 
     createIndexButton.addEventListener('click', function(e) {
-        var indexArray = instance.createIndex(filePath.files[0]);
+        var indexArray = instance.readFile(filePath.files[0]);
     });
 
 

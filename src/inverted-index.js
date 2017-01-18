@@ -2,58 +2,60 @@ class Index {
     constructor() {
         this.indexArray = [];
     }
-
-    createIndex(file) {
+    readFile(file) {
         var reader = new FileReader();
-        reader.onloadend = () => {
+        reader.readAsText(file);
+        reader.onload = () => {
             var json = JSON.parse(reader.result);
-            if (json != null) {
-                var indexTerms = [];
+            this.createIndex(json);
+        }
+    }
+
+    createIndex(json) {
+        console.log('CONtent', json);
+        if (json != null) {
+            var indexTerms = [];
+            for (let object of json) {
+                for (let key in object) {
+                    if (object.hasOwnProperty(key)) {
+                        let terms = object[key].toLowerCase().split(/\W+/);
+                        for (let term of terms) {
+                            //pushes a term into indexTerms array if the terms is not present
+                            if (indexTerms.indexOf(term) < 0) {
+                                indexTerms.push(term);
+                            }
+                        }
+                    }
+                }
+            }
+
+            var index = {};
+            //index['file'] = file.name;
+            for (let indexTerm of indexTerms) {
+                var objects = [];
+                var i = 0;
                 for (let object of json) {
                     for (let key in object) {
                         if (object.hasOwnProperty(key)) {
                             let terms = object[key].toLowerCase().split(/\W+/);
-                            for (let term of terms) {
-                                //pushes a term into indexTerms array if the terms is not present
-                                if (indexTerms.indexOf(term) < 0) {
-                                    indexTerms.push(term);
-                                }
+                            if (terms.indexOf(indexTerm) > -1 & objects.indexOf(i) < 0) {
+                                objects.push(i);
                             }
                         }
                     }
+                    i++;
                 }
-
-                var index = {};
-                //index['file'] = file.name;
-                for (let indexTerm of indexTerms) {
-                    var objects = [];
-                    var i = 0;
-                    for (let object of json) {
-                        for (let key in object) {
-                            if (object.hasOwnProperty(key)) {
-                                let terms = object[key].toLowerCase().split(/\W+/);
-                                if (terms.indexOf(indexTerm) > -1 & objects.indexOf(i) < 0) {
-                                    objects.push(i);
-                                }
-                            }
-                        }
-                        i++;
-                    }
-                    index[indexTerm] = objects;
-                }
-                this.indexArray.push(index);
-                //console.log(index)
-                display.innerText = 'Index created';
-
-                for (let [key, value] of Object.entries(index)) {
-                    termstable.innerHTML = termstable.innerHTML + '<tr><td>' + key + '</td>' + (value.includes(0) ?
-                            '<td> <i class="glyphicon glyphicon-ok"></i> </td>' : ' <td></td>') +
-                        (value.includes(1) ? '<td><i class="glyphicon glyphicon-remove"></i></td>' : '<td></td>') + '</tr>';
-                }
+                index[indexTerm] = objects;
             }
-
+            this.indexArray.push(index);
+            // display.innerText = 'Index created';
+            // alert('index created');
+            for (let [key, value] of Object.entries(index)) {
+                termstable.innerHTML = termstable.innerHTML + '<tr><td>' + key + '</td>' + (value.includes(0) ?
+                        '<td> <i class="glyphicon glyphicon-ok"></i> </td>' : ' <td></td>') +
+                    (value.includes(1) ? '<td><i class="glyphicon glyphicon-remove"></i></td>' : '<td></td>') + '</tr>';
+            }
         }
-        reader.readAsText(file);
     }
 
     getIndex(file) {

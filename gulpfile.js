@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const uglify = require('gulp-uglify');
 const plumber = require('gulp-plumber');
 const livereload = require('gulp-livereload');
+const jasmine = require('gulp-jasmine');
 
 //Scripts task
 gulp.task('scripts', function() {
@@ -12,6 +13,11 @@ gulp.task('scripts', function() {
 });
 
 //Tests task
+gulp.task('test', () => {
+    gulp.src('jasmine/spec/*.js')
+        .pipe(jasmine());
+});
+
 
 //Watch task
 //Watches js
