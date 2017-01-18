@@ -52,7 +52,7 @@ class Index {
             // alert('index created');
             for (let [key, value] of Object.entries(index)) {
                 termstable.innerHTML = termstable.innerHTML + '<tr><td>' + key + '</td>' + (value.includes(0) ?
-                        '<td> <i class="glyphicon glyphicon-ok"></i> </td>' : ' <td></td>') +
+                        '<td> <i class="glyphicon glyphicon-remove"></i> </td>' : ' <td></td>') +
                     (value.includes(1) ? '<td><i class="glyphicon glyphicon-remove"></i></td>' : '<td></td>') + '</tr>';
             }
         }
@@ -98,6 +98,7 @@ class Index {
             display.innerText = results;
 
         }
-
     }
+
+
 }
