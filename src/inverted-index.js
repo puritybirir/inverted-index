@@ -67,6 +67,7 @@ class Index {
         this.createIndex(jsonData);
         let createdIndex = this.indexArray;
         let toBeDisplayed = createdIndex.shift();
+        termstable.innerHTML = ' '
         for (let [key, value] of Object.entries(toBeDisplayed)) {
             termstable.innerHTML = termstable.innerHTML + '<tr><td>' + key + '</td>' + (value.includes(0) ?
                     '<td> <i class="glyphicon glyphicon-remove"></i> </td>' : ' <td></td>') +
@@ -90,7 +91,7 @@ class Index {
         this.createIndex(this.jsonData);
         if (this.indexArray.length != 0) {
             var results = {};
-            var tokens = valuesToSearch.split(/\s*(,|\s)\s*/);
+            var tokens = valuesToSearch.split(' ');
             if (tokens[0].indexOf('.json') > -1) {
                 for (let index of this.indexArray) {
                     if (index.file == tokens[0]) {
@@ -120,10 +121,9 @@ class Index {
 
     displaySearch(valuesToSearch) {
         let searchResults = this.searchIndex(valuesToSearch);
+        resulttable.innerHTML = ''
         for (let [key, value] of Object.entries(searchResults)) {
-            termstable.innerHTML = '<tr> <th> <h2>Words</h2> </th> <th> <h2>Document one</h2> </th> <th> <h2>Document Two</h2> </th> </tr> <tr><td>' + key + '</td>' + (value.includes(0) ?
-                    '<td> <i class="glyphicon glyphicon-remove"></i> </td>' : ' <td></td>') +
-                (value.includes(1) ? '<td><i class="glyphicon glyphicon-remove"></i></td>' : '<td></td>') + '</tr>';
+            resulttable.innerHTML = resulttable.innerHTML + '<tr><td>' + key + '</td>' + '<td>' + value + '</td></tr> '
         }
 
     }
