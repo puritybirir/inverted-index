@@ -6,19 +6,29 @@ class Index {
         var reader = new FileReader();
         reader.readAsText(file);
         reader.onload = () => {
-            var json = JSON.parse(reader.result);
-            this.displayIndex(json);
-            this.json = json;
+            var jsonData = JSON.parse(reader.result);
+            this.displayIndex(jsonData);
+            this.createIndex(jsonData);
+            this.jsonData = jsonData;
+            //this.terms = terms
         }
     }
+    cleanData(data) {
+        let terms = (data)
+            .toLowerCase()
+            .replace(/,(?=\S)/g, ' ')
+            .replace(/\btitle\b|\btext\b|,(?=\s)|[:.{}""]/g, '')
+            .split(' ');
+        return terms;
+    }
 
-    createIndex(json) {
-        if (json != null) {
+    createIndex(jsonData) {
+        if (jsonData != null) {
             var indexTerms = [];
-            for (let object of json) {
+            for (let object of jsonData) {
                 for (let key in object) {
                     if (object.hasOwnProperty(key)) {
-                        let terms = object[key].toLowerCase().split(/\W+/g);
+                        let terms = this.cleanData(object[key]);
                         for (let term of terms) {
                             //pushes a term into indexTerms array if the terms is not present
                             if (indexTerms.indexOf(term) < 0) {
@@ -29,14 +39,15 @@ class Index {
                 }
             }
 
+
             var index = {};
             for (let indexTerm of indexTerms) {
                 var objects = [];
                 var i = 0;
-                for (let object of json) {
+                for (let object of jsonData) {
                     for (let key in object) {
                         if (object.hasOwnProperty(key)) {
-                            let terms = object[key].toLowerCase().split(/\W+/g);
+                            let terms = this.cleanData(object[key]);
                             if (terms.indexOf(indexTerm) > -1 & objects.indexOf(i) < 0) {
                                 objects.push(i);
                             }
@@ -47,14 +58,15 @@ class Index {
                 index[indexTerm] = objects;
             }
             this.indexArray.push(index);
+            return this.indexArray[0];
         }
     }
 
-    displayIndex(json) {
-        this.createIndex(json);
+
+    displayIndex(jsonData) {
+        this.createIndex(jsonData);
         let createdIndex = this.indexArray;
         let toBeDisplayed = createdIndex.shift();
-        console.log(toBeDisplayed);
         for (let [key, value] of Object.entries(toBeDisplayed)) {
             termstable.innerHTML = termstable.innerHTML + '<tr><td>' + key + '</td>' + (value.includes(0) ?
                     '<td> <i class="glyphicon glyphicon-remove"></i> </td>' : ' <td></td>') +
@@ -62,7 +74,6 @@ class Index {
         }
 
     }
-
 
     getIndex(file) {
         if (this.indexArray.length != 0) {
@@ -72,10 +83,11 @@ class Index {
                 }
             }
         }
+        return this.indexArray[0];
     }
 
     searchIndex(valuesToSearch) {
-        this.createIndex(this.json);
+        this.createIndex(this.jsonData);
         if (this.indexArray.length != 0) {
             var results = {};
             var tokens = valuesToSearch.split(/\s*(,|\s)\s*/);
@@ -115,6 +127,5 @@ class Index {
         }
 
     }
-
 
 }
