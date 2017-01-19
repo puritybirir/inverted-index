@@ -59,6 +59,8 @@ class Index {
             }
             this.indexArray.push(index);
             return this.indexArray[0];
+        } else {
+            alert("Json file is empty")
         }
     }
 
