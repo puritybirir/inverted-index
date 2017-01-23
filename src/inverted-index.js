@@ -1,13 +1,26 @@
+/**
+ * InvertedIndex Class
+ * @class
+ */
 class Index {
+  /**
+   * class constructor
+   * @constructor
+   */
+
   constructor() {
     this.indexArray = [];
   }
+
+  /**
+   * Reads the JSON data using FileReader
+   * @param {object} file - Content of the file
+   */
   readFile(file) {
     const reader = new FileReader();
     reader.readAsText(file);
     reader.onload = () => {
       let jsonData = JSON.parse(reader.result);
-      this.displayIndex(jsonData);
       this.createIndex(jsonData);
       this.jsonData = jsonData;
     };
@@ -60,38 +73,6 @@ class Index {
     }
   }
 
-  mapIndexToTable(documentValue, value) {
-    if (value.includes(documentValue)) {
-      return (
-        `<td>
-          <i class="glyphicon glyphicon-remove"></i>
-        </td>
-      `);
-    }
-    return ('<td></td>');
-  }
-
-  displayIndex(jsonData) {
-    this.createIndex(jsonData);
-    let createdIndex = this.indexArray;
-    let toBeDisplayed = createdIndex.shift();
-    termstable.innerHTML = ' '
-
-
-
-    for (let [key, value] of Object.entries(toBeDisplayed)) {
-      let table = `
-            <tr>
-                <td> ${key} </td>
-                ${this.mapIndexToTable(0, value)}
-                ${this.mapIndexToTable(1, value)}
-            </tr>
-        `
-      termstable.innerHTML = termstable.innerHTML + table;
-    }
-
-  }
-
   getIndex(file) {
     if (this.indexArray.length != 0) {
       for (let index of this.indexArray) {
@@ -107,50 +88,19 @@ class Index {
     this.createIndex(this.jsonData);
     if (this.indexArray.length != 0) {
       const results = {};
-      let tokens = valuesToSearch.split(' ');
-      if (tokens[0].indexOf('.json') > -1) {
-        for (let index of this.indexArray) {
-          if (index.file == tokens[0]) {
-            let indexToUse = index;
-            break;
+      let items = valuesToSearch.split(/\W/);
 
-          }
-        }
-        tokens.shift();
-        for (let token of tokens) {
-          results[token] = indexToUse[token.toLowerCase()];
-
-        }
-      } else {
-        for (let token of tokens) {
+      for (let item of items) {
+        if (item != '') {
           for (let index of this.indexArray) {
-            if (index[token.toLowerCase()] != undefined) {
-              results[token] = index[token.toLowerCase()];
+            if (index[item.toLowerCase()] != undefined) {
+              results[item] = index[item.toLowerCase()];
             }
           }
         }
       }
-
       return results;
     }
-  }
-
-  displaySearch(valuesToSearch) {
-    let searchResults = this.searchIndex(valuesToSearch);
-    resultTable.innerHTML = ''
-
-    for (let [key, value] of Object.entries(searchResults)) {
-      let table = `
-        <tr>
-          <td> ${ key } </td>
-          ${this.mapIndexToTable(0, value)}
-          ${this.mapIndexToTable(1, value)}
-        </tr>
-      `;
-
-      resultTable.innerHTML = resultTable.innerHTML + table;
-    }
-
   }
 
 }

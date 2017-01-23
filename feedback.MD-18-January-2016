@@ -1,0 +1,12 @@
+Names of the document should appear precisely
+Upload more than one file asynchronously
+Have the name of the file showing.
+Search results: Searching from what file and which document.
+Find a way to show a document has no content.(alert a user);
+Show feedback to user when user attempts to show wrong things or uploads the wrong file.
+anonymous functions in gulp file
+gulp should reload from browser html,css and js
+Change file reader api and ensure to put semicolons where necessary
+Calling the create index method shoulldn't rerurn anything
+Unnecesary space between bloacks of code/remove and add where necessary
+Ensure that the search index test is robust and implements all the required tests
