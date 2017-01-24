@@ -25,9 +25,11 @@ app.controller('MyIndexController', ['$scope', function ($scope) {
   $scope.search = () => {
     $scope.showIndex = false;
     $scope.showSearch = true;
+    const selectSearch = $scope.toSearch;
     const terms = document.getElementById("terms").value;
     const opt = document.getElementById("select");
     const filename = opt.options[opt.selectedIndex].text;
+    console.log(filename);
     $scope.results = $scope.instance.searchIndex(filename, terms);
     console.log($scope.results);
   }

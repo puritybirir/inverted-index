@@ -76,7 +76,7 @@
           </div>
           <select class="select" id="select">
               <option ng-repeat="file in searchFiles" value="file"> {{ file }} </option>
-              <option ng-if="objKeys(searchFiles).length > 1" value="all"> All </option>
+              <option ng-if="objKeys(searchFiles).length > 1" value="all" ng-model="toSearch"> All </option>
             </select>
           <div ng-if="showIndex">
             <table id="termstable" class="table" ng-repeat="book in objKeys(indexData)">

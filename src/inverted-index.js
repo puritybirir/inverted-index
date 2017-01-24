@@ -96,14 +96,16 @@ class Index {
             }
           }
         }
-      } else if (filename == 'All') {
-        for (let item of items) {
-          if (item != '') {
-            for (const index in this.indexObject) {
-
-              const term = item.toLowerCase();
-              if (this.indexObject[index][term] != undefined) {
-                results[item] = this.indexObject[filename][item.toLowerCase()];
+      } else {
+        if (filename === 'All') {
+          for (let item of items) {
+            if (item != '') {
+              for (const obj in this.indexObject) {
+                const term = item.toLowerCase();
+                if (this.indexObject[obj][term] != undefined) {
+                  results[item] = this.indexObject[obj][term];
+                  console.log(results);
+                }
               }
             }
           }
