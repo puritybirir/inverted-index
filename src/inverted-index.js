@@ -9,7 +9,7 @@ class Index {
    */
 
   constructor() {
-    this.indexArray = [];
+    this.indexObject = {};
   }
 
   /**
@@ -19,9 +19,10 @@ class Index {
   readFile(file) {
     const reader = new FileReader();
     reader.readAsText(file);
+    const filename = file.name;
     reader.onload = () => {
       let jsonData = JSON.parse(reader.result);
-      this.createIndex(jsonData);
+      this.createIndex(jsonData, filename);
       this.jsonData = jsonData;
     };
   }
@@ -34,7 +35,7 @@ class Index {
     return terms;
   }
 
-  createIndex(jsonData) {
+  createIndex(jsonData, filename) {
     if (jsonData != null) {
       const indexTerms = [];
       for (let object of jsonData) {
@@ -68,33 +69,42 @@ class Index {
         }
         index[indexTerm] = objects;
       }
-      this.indexArray.push(index);
-      return this.indexArray[0];
+      this.indexObject[filename] = index;
     }
   }
 
   getIndex(file) {
-    if (this.indexArray.length != 0) {
-      for (let index of this.indexArray) {
+    if (this.indexObject.length != 0) {
+      for (let index of this.indexObject) {
         if (index.file == file) {
           display.innerText = index.toSource();
         }
       }
     }
-    return this.indexArray[0];
+    return this.indexObject[0];
   }
 
-  searchIndex(valuesToSearch) {
-    this.createIndex(this.jsonData);
-    if (this.indexArray.length != 0) {
+  searchIndex(filename, valuesToSearch) {
+    if (Object.keys(this.indexObject).length != 0) {
       const results = {};
       let items = valuesToSearch.split(/\W/);
+      if (Object.keys(this.indexObject).indexOf(filename) != -1) {
+        for (let item of items) {
+          if (item != '') {
+            if (this.indexObject[filename][item.toLowerCase()] != undefined) {
+              results[item] = this.indexObject[filename][item.toLowerCase()];
+            }
+          }
+        }
+      } else if (filename == 'All') {
+        for (let item of items) {
+          if (item != '') {
+            for (const index in this.indexObject) {
 
-      for (let item of items) {
-        if (item != '') {
-          for (let index of this.indexArray) {
-            if (index[item.toLowerCase()] != undefined) {
-              results[item] = index[item.toLowerCase()];
+              const term = item.toLowerCase();
+              if (this.indexObject[index][term] != undefined) {
+                results[item] = this.indexObject[filename][item.toLowerCase()];
+              }
             }
           }
         }

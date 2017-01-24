@@ -20,3 +20,8 @@ body {
   color: #F4DECB;
   outline: none;
 }
+
+.select {
+  width: 170px;
+  height: 30px;
+}
