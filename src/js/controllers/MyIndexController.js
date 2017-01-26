@@ -13,7 +13,7 @@ app.controller('MyIndexController', ['$scope', function ($scope) {
     $scope.filename = file.name;
     $scope.files.push(file.name);
     $scope.searchFiles.push(file.name);
-    $scope.instance.readFile(file);
+    $scope.alert = $scope.instance.readFile(file);
   }
 
   $scope.createIndex = () => {
@@ -29,8 +29,6 @@ app.controller('MyIndexController', ['$scope', function ($scope) {
     const terms = document.getElementById("terms").value;
     const opt = document.getElementById("select");
     const filename = opt.options[opt.selectedIndex].text;
-    console.log(filename);
     $scope.results = $scope.instance.searchIndex(filename, terms);
-    console.log($scope.results);
   }
 }]);
