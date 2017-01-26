@@ -57,6 +57,7 @@
               <input class="btn btn-custom" name="file" id="filePath" type="file" />
               <button type="button" class="btn btn-custom" ng-click="getFile()">Upload File</button>
             </p>
+            {{ alert }}
           </div>
 
           <div class=" input-group col-md-8">
@@ -100,23 +101,26 @@
           </div>
 
           <div ng-if="showSearch">
-            <table id="searchresults" class="table">
+            <table id="searchresults" class="table" ng-repeat="result in objKeys(results)">
               <tr>
-                <th>
-                  <h2>Words</h2>
-                </th>
-                <th>
-                  <h2>Document one</h2>
-                </th>
-                <th>
-                  <h2>Document Two</h2>
-                </th>
-              </tr>
-              <tr ng-repeat="(key, value) in results">
-                <td> {{ key }}</td>
-                <td> {{ value.includes(0) ? 'X' : ' ' }}</td>
-                <td> {{ value.includes(1) ? 'X' : ' ' }}</td>
-              </tr>
+                <td><strong>Results for {{ result }}</strong></td>
+                <tr>
+                  <tr>
+                    <th>
+                      <h2>Words</h2>
+                    </th>
+                    <th>
+                      <h2>Document one</h2>
+                    </th>
+                    <th>
+                      <h2>Document Two</h2>
+                    </th>
+                  </tr>
+                  <tr ng-repeat="(key, value) in results[result]">
+                    <td> {{ key }}</td>
+                    <td> {{ value.includes(0) ? 'X' : ' ' }}</td>
+                    <td> {{ value.includes(1) ? 'X' : ' ' }}</td>
+                  </tr>
             </table>
           </div>
 
@@ -131,6 +135,6 @@
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <script src="js/app.js"></script>
   <script src="js/controllers/MyIndexController.js"></script>
-  <script src="inverted-index.js"></script>
+  <script src="js/inverted-index.js"></script>
 
 </body>
