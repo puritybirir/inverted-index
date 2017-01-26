@@ -8,8 +8,6 @@ const browsersync = require('browser-sync').create();
 //Scripts task
 gulp.task('scripts', function () {
   gulp.src('src/js/**/*.js')
-    .pipe(gulp.dest('src'))
-    .pipe(gulp.dest('build/js'))
     .pipe(livereload());
 });
 
