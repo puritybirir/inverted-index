@@ -28,8 +28,8 @@ describe("Inverted index", () => {
     let populatedData;
     let mapData;
     beforeEach(() => {
+      mapData = index.createIndex(myDoc, 'myDoc');
       populatedData = index.getIndex('myDoc');
-      mapData = index.createIndex(myDoc);
     });
 
     it("index should be created after reading", () => {
@@ -38,16 +38,16 @@ describe("Inverted index", () => {
 
     });
     it("ensures a correct index is created", () => {
-      expect(mapData['in']).toEqual([0]);
-      expect(mapData['of']).toEqual([0, 1]);
-      expect(mapData['lord']).toEqual([1]);
-      expect(mapData['alice']).toEqual([0]);
+      expect(mapData['myDoc']['in']).toEqual([0]);
+      expect(mapData['myDoc']['of']).toEqual([0, 1]);
+      expect(mapData['myDoc']['lord']).toEqual([1]);
+      expect(mapData['myDoc']['alice']).toEqual([0]);
     });
 
     describe('searchIndex', () => {
       let getData;
       beforeEach(() => {
-        getData = index.searchIndex('wonderland');
+        getData = index.searchIndex('myDoc', 'wonderland');
       });
       it('Searches for a particular word', () => {
         expect(getData).toEqual({ wonderland: [0] });
@@ -57,7 +57,7 @@ describe("Inverted index", () => {
     describe('Correct Index', () => {
       let getData;
       beforeEach(() => {
-        getData = index.searchIndex('alice');
+        getData = index.searchIndex('myDoc', 'alice');
       });
       it('Finds the correct index of word input', () => {
         expect(getData).toEqual({ alice: [0] });

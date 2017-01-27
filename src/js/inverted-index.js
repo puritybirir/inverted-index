@@ -98,17 +98,11 @@ class Index {
       }
       this.indexObject[filename] = index;
     }
+    return this.indexObject;
   }
 
   getIndex(file) {
-    if (this.indexObject.length != 0) {
-      for (let index of this.indexObject) {
-        if (index.file == file) {
-          display.innerText = index.toSource();
-        }
-      }
-    }
-    return this.indexObject[0];
+    return this.indexObject;
   }
 
   searchIndex(filename, valuesToSearch) {
