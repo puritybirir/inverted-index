@@ -1,13 +1,14 @@
 const myDoc = [{
-    "title": "Alice in Wonderland",
-    "text": "Alice falls into a rabbit hole and enters a world full of imagination."
+    "title": 'Alice in Wonderland',
+    "text": 'Alice falls into a rabbit hole and enters a world full of imagination'.
   },
   {
-    "title": "The Lord of the Rings: The Fellowship of the Ring.",
-    "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
+    'title': 'The Lord of the Rings: The Fellowship of the Ring.',
+    'text': 'An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring.'
   }
 ]
 
+const bookName = 'books.json'
 let index;
 describe("Inverted index", () => {
   beforeEach(() => {
@@ -22,7 +23,16 @@ describe("Inverted index", () => {
     it("assert JSON file is not empty", () => {
       expect(readData).not.toBe(null);
     });
+
+    it("checks for Invalid JSON file", () => {
+      expect(() => {
+        index.createIndex('Invalid', bookName);
+      }).toThrow(new Exception('Invalid file'));
+    });
   });
+
+
+
 
   describe("Populate Index", function () {
     let populatedData;

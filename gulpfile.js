@@ -5,24 +5,24 @@ const gulp = require('gulp'),
   jasmine = require('gulp-jasmine');
 const browsersync = require('browser-sync').create();
 
-//Scripts task
-gulp.task('scripts', function () {
+// Scripts task
+gulp.task('scripts', () => {
   gulp.src('src/js/**/*.js')
     .pipe(livereload());
 });
 
-//Front task
-gulp.task('Front', function () {
+// Front task
+gulp.task('Front', () => {
   browsersync.init({
     server: {
-      baseDir: "./src"
+      baseDir: './src',
     },
     port: 2700,
     ui: {
-      port: 2700
-    }
+      port: 2700,
+    },
   });
-  gulp.watch('./src/**/*.{html,css,js}').on("change", browsersync.reload);
+  gulp.watch('./src/**/*.{html,css,js}').on('change', browsersync.reload);
 });
 
 
@@ -35,14 +35,13 @@ gulp.task('test', () => {
 });
 
 
-//Watch task
-//Watches js
-gulp.task('watch', function () {
-
-  var server = livereload();
+// Watch task
+// Watches js
+gulp.task('watch', () => {
+  const server = livereload();
   livereload.listen();
-  gulp.watch('src/**/*.js', ['scripts'])
+  gulp.watch('src/**/*.js', ['scripts']);
 });
 
-//Default task that runs all the scripts at the same time
+// Default task that runs all the scripts at the same time
 gulp.task('default', ['scripts', 'watch', 'Front']);
