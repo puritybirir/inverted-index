@@ -38,7 +38,7 @@
           <p> 2. Select file to index and use the create index button to generate the index </p> <br>
           <p> 3. Enter word(s) to search.</p><br>
 
-          <table>
+          <table class="responstable">
             <tr>
               <th>Files Uploaded
                 <th>
@@ -62,7 +62,7 @@
           </div>
 
           <div class=" input-group col-md-8">
-            <button type="button" id="createIndexButton" class="btn btn-custom" ng-click="createIndex()">Create Index</button>
+            <button type="button" id="createIndexButton" class="btn btn-custom" ng-click="createIndex(); getIndex();">Create Index</button>
             <br/>
             <br/>
             <br/>

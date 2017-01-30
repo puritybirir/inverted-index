@@ -33,7 +33,8 @@ class Index {
     const filename = file.name;
     reader.onload = () => {
       if (!reader.result.length) {
-        return alert('Empty file')
+        alert('Empty file');
+        throw new Error('Empty file')
       }
       try {
         let jsonData = JSON.parse(reader.result);
@@ -45,7 +46,7 @@ class Index {
 
         this.jsonData = jsonData;
       } catch (error) {
-        console.debug(error)
+        return alert('Invalid Json file');
       }
     };
   }
@@ -98,17 +99,18 @@ class Index {
       }
       this.indexObject[filename] = index;
     }
-    return this.indexObject;
   }
 
   getIndex(file) {
     return this.indexObject;
   }
 
-  searchIndex(filename, valuesToSearch) {
+  //... is an extended parameter
+  searchIndex(filename, ...valuesToSearch) {
     if (Object.keys(this.indexObject).length != 0) {
       const results = {};
-      let items = valuesToSearch.split(/\W/);
+      let items = valuesToSearch.toString();
+      items = items.replace(/[^a-z0-9 ]/gi, '').split(' ');
       if (Object.keys(this.indexObject).indexOf(filename) != -1) {
         const fileResult = {}
         for (let item of items) {
