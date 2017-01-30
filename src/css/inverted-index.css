@@ -1,23 +1,23 @@
 @import 'bootstrap.min.css';
 body {
-  background: lightyellow;
-  color: yellow
+  background: #cdd422;
+  color: #431c5d;
 }
 
 .header-bg {
-  background: lightyellow;
+  background: #cdd422;
 }
 
 .left-side {
-  background: lightgoldenrodyellow;
+  background: #cdd422;
 }
 
 .btn-custom,
 .btn-custom:hover,
 .btn-custom:focus,
 .btn-custom:active {
-  background: greenyellow;
-  color: white;
+  background: #e05915;
+  color: #431c5d;
   outline: none;
 }
 
