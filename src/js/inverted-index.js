@@ -41,13 +41,11 @@ class Index {
 
         if (this.checkTitleAndText(jsonData)) {
           return alert('No title or text');
-          throw new Error('No title or text');
         }
 
         this.jsonData = jsonData;
       } catch (error) {
         return alert('Invalid Json file');
-        throw new Error('Invalid Json file');
       }
     };
   }

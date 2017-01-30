@@ -1,77 +1,128 @@
-const myDoc = [{
-    "title": 'Alice in Wonderland',
-    "text": 'Alice falls into a rabbit hole and enters a world full of imagination'.
-  },
-  {
-    'title': 'The Lord of the Rings: The Fellowship of the Ring.',
-    'text': 'An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring.'
-  }
-]
+ const myDoc = [{
+     "title": "Alice in Wonderland",
+     "text": "Alice falls into a rabbit hole and enters a world full of imagination."
+   },
+   {
+     "title": "The Lord of the Rings: The Fellowship of the Ring.",
+     "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
+   }
+ ];
 
-const bookName = 'books.json'
-let index;
-describe("Inverted index", () => {
-  beforeEach(() => {
-    index = new Index();
-  });
+ const myDoc2 = [{
+     "title": "The Fault in our stars",
+     "text": "Some infinities are bigger than others, a writer we used to like taught us that"
+   },
+   {
+     "title": " Of The Alchemist",
+     "text": "And, when you want something, all the universe conspires in helping you to achieve it."
+   }
+ ];
 
-  describe("Read book data", () => {
-    let readData;
-    beforeEach(() => {
-      readData = index.createIndex(myDoc);
-    });
-    it("assert JSON file is not empty", () => {
-      expect(readData).not.toBe(null);
-    });
+ const wrongTitleandText = `[
+    {
+      "titlee": "Hello from the other side",
+      "valueeee": "I must have called a thousand times"
+    },
+    {
+      "valueeee": "Imaginary friends",
+      "titleee": "There's Blue,Mac and many others."
+    }
+  ]`;
 
-    it("checks for Invalid JSON file", () => {
-      expect(() => {
-        index.createIndex('Invalid', bookName);
-      }).toThrow(new Exception('Invalid file'));
-    });
-  });
+ const emptyJson = '';
+
+ let index;
+ describe("Inverted index", () => {
+   beforeEach(() => {
+     index = new Index();
+     index.createIndex(myDoc, 'myDoc');
+   });
+
+   describe("Read book data", () => {
+     beforeEach(() => {
+       index.createIndex(myDoc, 'myDoc');
+       index.createIndex(emptyJson, 'emptyJson');
+     });
+     it("assert JSON file is not empty", () => {
+       expect(index.getIndex('myDoc')).toBeTruthy();
+     });
+
+     it("checks that JSON file is valid", () => {
+       expect(index.getIndex('myDoc')).toBeTruthy();
+     });
+   });
 
 
 
 
-  describe("Populate Index", function () {
-    let populatedData;
-    let mapData;
-    beforeEach(() => {
-      mapData = index.createIndex(myDoc, 'myDoc');
-      populatedData = index.getIndex('myDoc');
-    });
+   describe("Populate Index", () => {
+     let populatedData;
+     let mapData;
+     beforeEach(() => {
+       index.createIndex(myDoc, 'myDoc');
+       index.createIndex(myDoc2, 'myDoc2');
 
-    it("index should be created after reading", () => {
+     });
 
-      expect(populatedData).not.toBe(null);
+     it("index should be created after reading", () => {
 
-    });
-    it("ensures a correct index is created", () => {
-      expect(mapData['myDoc']['in']).toEqual([0]);
-      expect(mapData['myDoc']['of']).toEqual([0, 1]);
-      expect(mapData['myDoc']['lord']).toEqual([1]);
-      expect(mapData['myDoc']['alice']).toEqual([0]);
-    });
+       expect(index.getIndex('myDoc')).toBeTruthy();
 
-    describe('searchIndex', () => {
-      let getData;
-      beforeEach(() => {
-        getData = index.searchIndex('myDoc', 'wonderland');
-      });
-      it('Searches for a particular word', () => {
-        expect(getData).toEqual({ wonderland: [0] });
-      });
-    });
+     });
+     it("ensures a correct index is created", () => {
+       expect(index.getIndex('myDoc')['myDoc']['in']).toEqual([0]);
+       expect(index.getIndex('myDoc')['myDoc']['of']).toEqual([0, 1]);
+       expect(index.getIndex('myDoc')['myDoc']['lord']).toEqual([1]);
+       expect(index.getIndex('myDoc')['myDoc']['alice']).toEqual([0]);
+     });
+     it("ensures an index is not overwritten by new JSON file", () => {
+       expect(index.getIndex('myDoc')['myDoc']['elf']).toEqual([1]);
+       expect(index.getIndex('myDoc')['myDoc']['rabbit']).toEqual([0]);
+       expect(index.getIndex('myDoc2')['myDoc2']['infinities']).toEqual([0]);
+       expect(index.getIndex('myDoc2')['myDoc2']['alchemist']).toEqual([1]);
+     });
 
-    describe('Correct Index', () => {
-      let getData;
-      beforeEach(() => {
-        getData = index.searchIndex('myDoc', 'alice');
-      });
-      it('Finds the correct index of word input', () => {
-        expect(getData).toEqual({ alice: [0] });
-      });
-    });
-  });
-});
+   });
+
+
+
+   describe('searchIndex', () => {
+     let getData;
+     let correctData;
+     let multipleData;
+     let arrayData;
+     let multipleArrayData;
+     let searchAllData;
+     beforeEach(() => {
+       index.createIndex(myDoc, 'myDoc');
+       index.createIndex(myDoc2, 'myDoc2');
+       getData = index.searchIndex('myDoc', 'wonderland');
+       correctData = index.searchIndex('myDoc', 'alice');
+       multipleData = index.searchIndex('myDoc', 'a alice elf dwarf hole');
+       arrayData = index.searchIndex('myDoc2', '[infinities are bigger universe conspires]');
+       multipleArrayData = index.searchIndex('myDoc2', '[infinities are [universe conspires in] helping]');
+       searchAllData = index.searchIndex('All', 'of');
+     });
+     it('Searches for a particular word', () => {
+       expect(getData).toEqual({ myDoc: { wonderland: [0] } });
+     });
+     it('Finds the correct index of word input', () => {
+       expect(correctData).toEqual({ myDoc: { alice: [0] } });
+     });
+     it('Ensures searchIndex can handle a varied number of searchterms as arguments', () => {
+       expect(multipleData).toEqual({ myDoc: { a: [0, 1], alice: [0], elf: [1], dwarf: [1], hole: [0] } });
+     });
+     it('Ensures it can search an array', () => {
+       expect(arrayData).toEqual({ myDoc2: { infinities: [0], are: [0], bigger: [0], universe: [1], conspires: [1] } });
+     });
+     it('Ensures it can search an array an arrays', () => {
+       expect(multipleArrayData).toEqual({ myDoc2: { infinities: [0], are: [0], universe: [1], conspires: [1], in: [0, 1], helping: [1] } });
+     });
+     it('Searches all indexed files ', () => {
+       expect(searchAllData).toEqual({
+         myDoc: { of: [0, 1] },
+         myDoc2: { of: [1] }
+       });
+     });
+   });
+ });
