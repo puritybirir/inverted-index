@@ -1,24 +1,24 @@
 @import 'bootstrap.min.css';
 @import "compass/css3";
 body {
-  background: #cdd422;
-  color: #431c5d;
+  background: #dddfd4;
+  color: #173e43;
 }
 
 .header-bg {
-  background: #cdd422;
+  background: #dddfd4;
 }
 
 .left-side {
-  background: #cdd422;
+  background: #dddfd4;
 }
 
 .btn-custom,
 .btn-custom:hover,
 .btn-custom:focus,
 .btn-custom:active {
-  background: #e05915;
-  color: #431c5d;
+  background: #173e43;
+  color: #dddfd4;
   outline: none;
 }
 

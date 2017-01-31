@@ -3,16 +3,23 @@
  * @class
  */
 class Index {
+
   /**
    * class constructor
    * @constructor
    */
-
   constructor() {
-      this.indexObject = {};
-      this.fileArray = [];
-    }
-    // check invalid json
+    this.indexObject = {};
+    this.fileArray = [];
+  }
+
+  /**
+   * checkInputData
+   *
+   * @param{object}
+   *
+   * @return{bool}
+   */
   checkInputData(file) {
     try {
       JSON.parse(file);
@@ -23,7 +30,10 @@ class Index {
   }
 
   /**
+   * readFile
+   *
    * Reads the JSON data using FileReader
+   *
    * @param {object} file - Content of the file
    */
   readFile(file) {
@@ -49,6 +59,14 @@ class Index {
       }
     };
   }
+
+  /**
+   * cleanData
+   *
+   * Reads the JSON data using FileReader
+   *
+   * @param {array}
+   */
   cleanData(data) {
     let terms = (data)
       .toLowerCase()
@@ -58,10 +76,25 @@ class Index {
     return terms;
   }
 
+  /**
+   *checkTitleAndText
+   *
+   * Checks that the array has a title and a text.
+   *
+   * @param {array}
+   */
   checkTitleAndText(array) {
     return array.some(value => !value.hasOwnProperty('title') || !value.hasOwnProperty('text'))
   }
 
+  /**
+   * createIndex
+   *
+   * Ensures that a correct Index is created
+   *
+   * @param {array}
+   * @param {object}
+   */
   createIndex(jsonData, filename) {
     if (jsonData != null) {
       const indexTerms = [];
@@ -77,8 +110,6 @@ class Index {
           }
         }
       }
-
-
       const index = {};
       for (const indexTerm of indexTerms) {
         const objects = [];
@@ -100,11 +131,27 @@ class Index {
     }
   }
 
+  /**
+   * getIndex
+   *
+   * gets the created Index from createIndex
+   *
+   * @param {object} file - Content of the file
+   */
   getIndex(file) {
     return this.indexObject;
   }
 
-  // ... is an extended parameter
+  /**
+   * searchIndex
+   *
+   * searches the created Index
+   *
+   * @param {object}
+   * @param {array}
+   *
+   * @return{object}
+   */
   searchIndex(filename, ...valuesToSearch) {
     if (Object.keys(this.indexObject).length !== 0) {
       const results = {};

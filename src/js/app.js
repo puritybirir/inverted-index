@@ -1,1 +1,1 @@
-let app = angular.module('myIndex', []);
+const app = angular.module('myIndex', []);
