@@ -1,21 +1,23 @@
- const myDoc = [{
-   title: 'Alice in Wonderland',
-   text: 'Alice falls into a rabbit hole and enters a world full of imagination.',
- },
- {
-   title: 'The Lord of the Rings: The Fellowship of the Ring.',
-   text: 'An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring.',
- },
+ const myDoc = [
+   {
+     title: 'Alice in Wonderland',
+     text: 'Alice falls into a rabbit hole and enters a world full of imagination.',
+   },
+   {
+     title: 'The Lord of the Rings: The Fellowship of the Ring.',
+     text: 'An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring.',
+   },
  ];
 
- const myDoc2 = [{
-   title: 'The Fault in our stars',
-   text: 'Some infinities are bigger than others, a writer we used to like taught us that',
- },
- {
-   title: ' Of The Alchemist',
-   text: 'And, when you want something, all the universe conspires in helping you to achieve it.',
- },
+ const myDoc2 = [
+   {
+     title: 'The Fault in our stars',
+     text: 'Some infinities are bigger than others, a writer we used to like taught us that',
+   },
+   {
+     title: ' Of The Alchemist',
+     text: 'And, when you want something, all the universe conspires in helping you to achieve it.',
+   },
  ];
 
  const emptyJson = '';
@@ -73,6 +75,7 @@
      let arrayData;
      let multipleArrayData;
      let searchAllData;
+
      beforeEach(() => {
        index.createIndex(myDoc, 'myDoc');
        index.createIndex(myDoc2, 'myDoc2');

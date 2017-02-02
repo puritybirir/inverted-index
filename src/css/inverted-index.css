@@ -2,7 +2,7 @@
 @import "compass/css3";
 body {
   background: #dddfd4;
-  color: #173e43;
+  color: #000000;
 }
 
 .header-bg {
@@ -18,7 +18,7 @@ body {
 .btn-custom:focus,
 .btn-custom:active {
   background: #173e43;
-  color: #dddfd4;
+  color: #000000;
   outline: none;
 }
 

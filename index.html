@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/inverted-index.css" type="text/css">
+  <link rel="stylesheet" href="src/css/inverted-index.css" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
 </head>
 
@@ -23,7 +23,7 @@
         <div class="col-md-3">
           <p>
           </p>
-          <h3> About this App</h3>
+          <h3> About </h3>
           <p></p>
           <p>
             This Inverted Index allows you to perform quick searches for a number of words. An inverted index consists of a list of all the unique words that appear in any document, and for each word, a list of the documents in which it appears.
@@ -82,6 +82,7 @@
             </select>
           <div ng-if="showIndex">
             <table id="termstable" class="table" ng-repeat="book in objKeys(indexData)">
+              <td><strong>Results for {{ book }}</strong></td>
               <tr>
                 <th>
                   <h2>Words</h2>
@@ -130,8 +131,8 @@
   </div>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/controllers/MyIndexController.js"></script>
-  <script src="js/inverted-index.js"></script>
+  <script src="src/js/app.js"></script>
+  <script src="src/js/controllers/MyIndexController.js"></script>
+  <script src="src/js/inverted-index.js"></script>
 
 </body>

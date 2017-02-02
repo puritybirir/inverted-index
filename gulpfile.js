@@ -15,14 +15,15 @@ gulp.task('scripts', () => {
 gulp.task('Front', () => {
   browsersync.init({
     server: {
-      baseDir: './src',
+      baseDir: ['./', './src']
     },
     port: 2700,
     ui: {
       port: 2700,
     },
   });
-  gulp.watch('./src/**/*.{html,css,js}').on('change', browsersync.reload);
+  gulp.watch('./index.html').on('change', browsersync.reload);
+  gulp.watch('./src/**/*.{css,js}').on('change', browsersync.reload);
 });
 
 

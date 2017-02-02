@@ -36,28 +36,23 @@ class Index {
    *
    * @param {object} file - Content of the file
    */
-  readFile(file) {
-    const reader = new FileReader();
-    reader.readAsText(file);
-    const filename = file.name;
-    reader.onload = () => {
-      if (!reader.result.length) {
-        alert('Empty file');
-        throw new Error('Empty file');
-      }
-      try {
-        const jsonData = JSON.parse(reader.result);
-        this.createIndex(jsonData, filename);
+  validJson(file, filename) {
+    if (!file.length) {
+      return 'Empty file';
+    }
+    try {
+      const jsonData = JSON.parse(file);
 
-        if (this.checkTitleAndText(jsonData)) {
-          return alert('No title or text');
-        }
-
-        this.jsonData = jsonData;
-      } catch (error) {
-        return alert('Invalid Json file');
+      if (this.checkTitleAndText(jsonData)) {
+        return 'No title or text';
       }
-    };
+
+      this.createIndex(jsonData, filename);
+      this.jsonData = jsonData;
+      return 'File Uploaded';
+    } catch (error) {
+      return 'Invalid Json file';
+    }
   }
 
   /**
@@ -87,6 +82,25 @@ class Index {
     return array.some(value => !value.hasOwnProperty('title') || !value.hasOwnProperty('text'))
   }
 
+  getUniqueTerms(terms) {
+    return terms.filter((value, index, arr) => arr.indexOf(value) === index);
+  }
+
+  getTerms() {
+    //
+  }
+
+  createIndexTerms(jsonData) {
+    let indexTerms;
+    jsonData.forEach((obj) => {
+      Object.keys(obj).forEach((key) => {
+        const terms = this.cleanData(obj[key]);
+        indexTerms = indexTerms.concat(this.getUniqueTerms(terms));
+      });
+    });
+    return indexTerms;
+  }
+
   /**
    * createIndex
    *
@@ -97,35 +111,37 @@ class Index {
    */
   createIndex(jsonData, filename) {
     if (jsonData != null) {
-      const indexTerms = [];
-      for (let object of jsonData) {
-        for (let key in object) {
-          if (object.hasOwnProperty(key)) {
-            const terms = this.cleanData(object[key]);
-            for (const term of terms) {
-              if (indexTerms.indexOf(term) < 0) {
-                indexTerms.push(term);
-              }
-            }
-          }
-        }
-      }
+      let indexTerms = [];
       const index = {};
+
+      jsonData.forEach((obj) => {
+        Object.keys(obj).forEach((key) => {
+          const terms = this.cleanData(obj[key]);
+          indexTerms = indexTerms.concat(this.getUniqueTerms(terms));
+        });
+      });
+
+      // indexTerms.forEach((term) => {
+      //   const objArray = [];
+      //   let i = 0;
+
+      // })s
+
       for (const indexTerm of indexTerms) {
-        const objects = [];
+        const objArray = [];
         let i = 0;
         for (const object of jsonData) {
           for (const key in object) {
             if (object.hasOwnProperty(key)) {
               const terms = this.cleanData(object[key]);
-              if (terms.indexOf(indexTerm) > -1 && objects.indexOf(i) < 0) {
-                objects.push(i);
+              if (terms.indexOf(indexTerm) > -1 && objArray.indexOf(i) < 0) {
+                objArray.push(i);
               }
             }
           }
           i += 1;
         }
-        index[indexTerm] = objects;
+        index[indexTerm] = objArray;
       }
       this.indexObject[filename] = index;
     }

@@ -8,13 +8,25 @@ app.controller('MyIndexController', ['$scope', function ($scope) {
   $scope.indexData = {};
   $scope.objKeys = Object.keys;
 
+  $scope.readFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsText(file);
+    const filename = file.name;
+    reader.onload = (event) => {
+      let content = event.target.result;
+      $scope.alert = $scope.instance.validJson(content, filename);
+      $scope.$apply();
+    }
+  }
+
   $scope.getFile = () => {
     const file = document.getElementById('filePath').files[0];
     $scope.filename = file.name;
     $scope.files.push(file.name);
     $scope.searchFiles.push(file.name);
-    $scope.alert = $scope.instance.readFile(file);
+    $scope.readFile(file);
   }
+
 
   $scope.createIndex = () => {
     $scope.showIndex = true;
