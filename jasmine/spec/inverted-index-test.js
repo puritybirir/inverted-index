@@ -24,45 +24,43 @@
  describe('Inverted index', () => {
    beforeEach(() => {
      index = new Index();
-     index.createIndex(myDoc, 'myDoc');
    });
 
    describe('Read book data', () => {
      beforeEach(() => {
-       index.createIndex(myDoc, 'myDoc');
-       index.createIndex(emptyJson, 'emptyJson');
+       index.createIndex('myDoc', myDoc);
      });
      it('assert JSON file is not empty', () => {
-       expect(index.getIndex('myDoc')).toBeTruthy();
+       expect(index.getIndex(myDoc)).toBeTruthy();
      });
 
      it('checks that JSON file is valid', () => {
-       expect(index.getIndex('myDoc')).toBeTruthy();
+       expect(index.getIndex(myDoc)).toBeTruthy();
      });
    });
 
    describe('Populate Index', () => {
      beforeEach(() => {
-       index.createIndex(myDoc, 'myDoc');
-       index.createIndex(myDoc2, 'myDoc2');
+       index.createIndex('myDoc', myDoc);
+       index.createIndex('myDoc2', myDoc2);
      });
 
      it('index should be created after reading', () => {
-       expect(index.getIndex('myDoc')).toBeTruthy();
+       expect(index.getIndex(myDoc)).toBeTruthy();
      });
 
      it('ensures a correct index is created', () => {
-       expect(index.getIndex('myDoc').myDoc.in).toEqual([0]);
-       expect(index.getIndex('myDoc').myDoc.of).toEqual([0, 1]);
-       expect(index.getIndex('myDoc').myDoc.lord).toEqual([1]);
-       expect(index.getIndex('myDoc').myDoc.alice).toEqual([0]);
+       expect(index.getIndex(myDoc).myDoc.in).toEqual([0]);
+       expect(index.getIndex(myDoc).myDoc.of).toEqual([0, 1]);
+       expect(index.getIndex(myDoc).myDoc.lord).toEqual([1]);
+       expect(index.getIndex(myDoc).myDoc.alice).toEqual([0]);
      });
 
      it('ensures an index is not overwritten by new JSON file', () => {
-       expect(index.getIndex('myDoc').myDoc.elf).toEqual([1]);
-       expect(index.getIndex('myDoc').myDoc.rabbit).toEqual([0]);
-       expect(index.getIndex('myDoc2').myDoc2.infinities).toEqual([0]);
-       expect(index.getIndex('myDoc2').myDoc2.alchemist).toEqual([1]);
+       expect(index.getIndex(myDoc).myDoc.elf).toEqual([1]);
+       expect(index.getIndex(myDoc).myDoc.rabbit).toEqual([0]);
+       expect(index.getIndex(myDoc2).myDoc2.infinities).toEqual([0]);
+       expect(index.getIndex(myDoc2).myDoc2.alchemist).toEqual([1]);
      });
    });
 
@@ -75,13 +73,13 @@
      let searchAllData;
 
      beforeEach(() => {
-       index.createIndex(myDoc, 'myDoc');
-       index.createIndex(myDoc2, 'myDoc2');
+       index.createIndex('myDoc', myDoc);
+       index.createIndex('myDoc2', myDoc2);
        getData = index.searchIndex('myDoc', 'wonderland');
        correctData = index.searchIndex('myDoc', 'alice');
        multipleData = index.searchIndex('myDoc', 'a alice elf dwarf hole');
        arrayData = index.searchIndex('myDoc2', '[infinities are bigger universe conspires]');
-       multipleArrayData = index.searchIndex('myDoc2', 'infinities', 'are', 'universe', 'conspires', 'in', 'helping');
+       multipleArrayData = index.searchIndex('myDoc2', '[infinities are [universe conspires in] helping]');
        searchAllData = index.searchIndex('All', 'of');
      });
 
