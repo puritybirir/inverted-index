@@ -1,35 +1,66 @@
- const myDoc = [{
-     title: 'Alice in Wonderland',
-     text: 'Alice falls into a rabbit hole and enters a world full of imagination.',
+ const myDoc = [
+   {
+     "title": "Alice in Wonderland",
+     "text": "Alice falls into a rabbit hole and enters a world full of imagination."
    },
    {
-     title: 'The Lord of the Rings: The Fellowship of the Ring.',
-     text: 'An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring.',
-   },
+     "title": "The Lord of the Rings: The Fellowship of the Ring.",
+     "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
+   }
  ];
 
- const myDoc2 = [{
-     title: 'The Fault in our stars',
-     text: 'Some infinities are bigger than others, a writer we used to like taught us that',
+ const myDoc2 = [
+   {
+     "title": "The Fault in our stars",
+     "text": "Some infinities are bigger than others, a writer we used to like taught us that"
    },
    {
-     title: ' Of The Alchemist',
-     text: 'And, when you want something, all the universe conspires in helping you to achieve it.',
-   },
+     "title": "Of The Alchemist",
+     "text": "And, when you want something, all the universe conspires in helping you to achieve it."
+   }
  ];
+
+ const wrongJson = [
+   {
+   "key": "Alice in Wonderland",
+   "value": "Alice falls into a rabbit hole and enters a world full of imagination."
+ }
+ ];
+
+ const invalidJson = ['njhj'];
 
  const emptyJson = '';
 
  let index;
+
  describe('Inverted index', () => {
    beforeEach(() => {
      index = new Index();
+   });
+
+   describe('Check Input data', () => {
+     it('assert that the file is parsed correctly', () => {
+       expect(index.validJson('myDoc', JSON.stringify(myDoc))).toBe('File Uploaded');
+     });
+
+     it('tests for an empty file', () => {
+       expect(index.validJson('emptyJson', emptyJson)).toBe('Empty file');
+     });
+
+     it('assert that error is returned if the file is wrong', () => {
+       expect(index.validJson('wrongJson', JSON.stringify(wrongJson))).toBe('No title or text');
+     });
+
+     it('Checks for an invalid Json file', () => {
+       expect(index.validJson('invalidJson', invalidJson)).toBe('Invalid Json file');
+     });
    });
 
    describe('Read book data', () => {
      beforeEach(() => {
        index.createIndex('myDoc', myDoc);
      });
+
      it('assert JSON file is not empty', () => {
        expect(index.getIndex(myDoc)).toBeTruthy();
      });
