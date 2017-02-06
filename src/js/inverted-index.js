@@ -31,7 +31,7 @@ class Index {
   }
 
   /**
-   * rvalidJson
+   * validJson
    *
    * Reads the JSON data using FileReader
    *
@@ -73,7 +73,7 @@ class Index {
   }
 
   /**
-   *  checkTitleAndText
+   * checkTitleAndText
    *
    * Checks that the array has a title and a text.
    *
