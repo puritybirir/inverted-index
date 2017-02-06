@@ -1,5 +1,4 @@
- const myDoc = [
-   {
+ const myDoc = [{
      title: 'Alice in Wonderland',
      text: 'Alice falls into a rabbit hole and enters a world full of imagination.',
    },
@@ -9,8 +8,7 @@
    },
  ];
 
- const myDoc2 = [
-   {
+ const myDoc2 = [{
      title: 'The Fault in our stars',
      text: 'Some infinities are bigger than others, a writer we used to like taught us that',
    },
@@ -83,7 +81,7 @@
        correctData = index.searchIndex('myDoc', 'alice');
        multipleData = index.searchIndex('myDoc', 'a alice elf dwarf hole');
        arrayData = index.searchIndex('myDoc2', '[infinities are bigger universe conspires]');
-       multipleArrayData = index.searchIndex('myDoc2', '[infinities are [universe conspires in] helping]');
+       multipleArrayData = index.searchIndex('myDoc2', 'infinities', 'are', 'universe', 'conspires', 'in', 'helping');
        searchAllData = index.searchIndex('All', 'of');
      });
 
