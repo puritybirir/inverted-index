@@ -14,23 +14,6 @@ class Index {
   }
 
   /**
-   * checkInputData
-   *
-   * Parses JSON if file type is correct
-   *
-   * @param{object}
-   * @return{bool}
-   */
-  checkInputData(file) {
-    try {
-      JSON.parse(file);
-      return true;
-    } catch (error) {
-      return false;
-    }
-  }
-
-  /**
    * validJson
    *
    * Reads the JSON data using FileReader
@@ -43,6 +26,7 @@ class Index {
     if (!file.length) {
       return 'Empty file';
     }
+
     try {
       const jsonData = JSON.parse(file);
       if (this.checkTitleAndText(jsonData)) {
