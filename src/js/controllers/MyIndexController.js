@@ -14,7 +14,7 @@ app.controller('MyIndexController', ['$scope', function ($scope) {
     const filename = file.name;
     reader.onload = (event) => {
       let content = event.target.result;
-      $scope.alert = $scope.instance.validJson(content, filename);
+      $scope.alert = $scope.instance.validJson(filename, content);
       $scope.$apply();
     }
   }
