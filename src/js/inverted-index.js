@@ -49,7 +49,7 @@ class Index {
    * @return {object}
    */
   cleanData(data) {
-    let terms = (data)
+    const terms = (data)
       .toLowerCase()
       .replace(/[^a-z0-9 ]/gi, '')
       .split(' ');
@@ -65,7 +65,7 @@ class Index {
    * @return {bool}
    */
   checkTitleAndText(myArray) {
-    return myArray.some(value => !value.hasOwnProperty('title') || !value.hasOwnProperty('text'))
+    return myArray.some(value => !value.hasOwnProperty('title') || !value.hasOwnProperty('text'));
   }
 
   /**
@@ -125,7 +125,7 @@ class Index {
         });
       });
       indexTerms.forEach((indexTerm) => {
-        let objArray = this.getValues(jsonData, indexTerm);
+        const objArray = this.getValues(jsonData, indexTerm);
         index[indexTerm] = objArray;
       });
       this.indexObject[filename] = index;
@@ -182,7 +182,7 @@ class Index {
       const results = {};
       let items = valuesToSearch.toString();
       items = this.cleanData(items);
-      if (Object.keys(this.indexObject).indexOf(filename) != -1) {
+      if (Object.keys(this.indexObject).indexOf(filename) !== -1) {
         results[filename] = this.getResult(items, filename);
       } else {
         if (filename === 'All') {
