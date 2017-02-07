@@ -14,7 +14,7 @@ app.controller('MyIndexController', ['$scope', function ($scope) {
     const filename = file.name;
     reader.onload = (event) => {
       let content = event.target.result;
-      $scope.alert = $scope.instance.validJson(filename, content);
+      $scope.alert = $scope.instance.createIndex(filename, content);
       $scope.$apply();
     }
   }
@@ -26,7 +26,6 @@ app.controller('MyIndexController', ['$scope', function ($scope) {
     $scope.searchFiles.push(file.name);
     $scope.readFile(file);
   }
-
 
   $scope.createIndex = () => {
     $scope.showIndex = true;
