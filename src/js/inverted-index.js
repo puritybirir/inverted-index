@@ -16,27 +16,25 @@ class Index {
   /**
    * validJson
    *
-   * Reads the JSON data using FileReader
+   * Validates the file input
    *
-   * @param {object} file - Content of the file
    * @param {string} filename - Name of the file
+   * @param {object} file - Content of the file
    * @return {string}
    */
   validJson(filename, file) {
     if (!file.length) {
       return 'Empty file';
     }
-
     try {
       const jsonData = JSON.parse(file);
       if (this.checkTitleAndText(jsonData)) {
         return 'No title or text';
       }
-      this.createIndex(filename, jsonData);
       this.jsonData = jsonData;
-      return 'File Uploaded';
+      return 'Correct file';
     } catch (error) {
-      return 'Invalid Json file';
+      return 'Invalid JSON file';
     }
   }
 
@@ -92,17 +90,15 @@ class Index {
   getValues(jsonData, indexTerm) {
     const objArray = [];
     let i = 0;
-    for (const object of jsonData) {
-      for (const key in object) {
-        if (object.hasOwnProperty(key)) {
-          const terms = this.cleanData(object[key]);
-          if (terms.indexOf(indexTerm) > -1 && objArray.indexOf(i) < 0) {
-            objArray.push(i);
-          }
+    jsonData.forEach((object) => {
+      Object.keys(object).forEach((key) => {
+        const terms = this.cleanData(object[key]);
+        if (terms.indexOf(indexTerm) > -1 && objArray.indexOf(i) < 0) {
+          objArray.push(i);
         }
-      }
+      });
       i += 1;
-    }
+    });
     return objArray;
   }
 
@@ -114,21 +110,28 @@ class Index {
    * @param {object}
    * @param {string}
    */
-  createIndex(filename, jsonData) {
-    if (jsonData != null) {
-      let indexTerms = [];
-      const index = {};
-      jsonData.forEach((obj, objIndex) => {
-        Object.keys(obj).forEach((key) => {
-          const terms = this.cleanData(obj[key]);
-          indexTerms = indexTerms.concat(this.getUniqueTerms(terms));
+  createIndex(filename, content) {
+    const valid = this.validJson(filename, content);
+    if (valid === 'Correct file') {
+      const jsonData = JSON.parse(content);
+      if (jsonData != null) {
+        let indexTerms = [];
+        const index = {};
+        jsonData.forEach((obj) => {
+          Object.keys(obj).forEach((key) => {
+            const terms = this.cleanData(obj[key]);
+            indexTerms = indexTerms.concat(this.getUniqueTerms(terms));
+          });
         });
-      });
-      indexTerms.forEach((indexTerm) => {
-        const objArray = this.getValues(jsonData, indexTerm);
-        index[indexTerm] = objArray;
-      });
-      this.indexObject[filename] = index;
+        indexTerms.forEach((indexTerm) => {
+          const objArray = this.getValues(jsonData, indexTerm);
+          index[indexTerm] = objArray;
+        });
+        this.indexObject[filename] = index;
+        return valid;
+      }
+    } else {
+      return valid;
     }
   }
 
@@ -140,8 +143,8 @@ class Index {
    * @param {object} file - Content of the file
    * @return {object}
    */
-  getIndex(file) {
-    return this.indexObject;
+  getIndex(filename) {
+    return this.indexObject[filename];
   }
 
   /**
@@ -155,15 +158,13 @@ class Index {
    */
   getResult(items, filename) {
     const fileResult = {};
-    for (const item of items) {
+    items.forEach((item) => {
       if (item !== '') {
-        if (this.indexObject[filename][item.toLowerCase()] !== undefined) {
-          fileResult[item] = this.indexObject[filename][item.toLowerCase()];
-        } else {
-          fileResult[item] = [];
-        }
+        fileResult[item] = this.indexObject[filename][item.toLowerCase()];
+      } else {
+        fileResult[item] = [];
       }
-    }
+    });
     return fileResult;
   }
 
@@ -178,20 +179,16 @@ class Index {
    * @return{object}
    */
   searchIndex(filename, ...valuesToSearch) {
-    if (Object.keys(this.indexObject).length !== 0) {
-      const results = {};
-      let items = valuesToSearch.toString();
-      items = this.cleanData(items);
-      if (Object.keys(this.indexObject).indexOf(filename) !== -1) {
-        results[filename] = this.getResult(items, filename);
-      } else {
-        if (filename === 'All') {
-          for (const file of Object.keys(this.indexObject)) {
-            results[file] = this.getResult(items, file);
-          }
-        }
-      }
-      return results;
+    const results = {};
+    let items = valuesToSearch.toString();
+    items = this.cleanData(items);
+    if (filename === 'All') {
+      Object.keys(this.indexObject).forEach((file) => {
+        results[file] = this.getResult(items, file);
+      });
+    } else {
+      results[filename] = this.getResult(items, filename);
     }
+    return results;
   }
 }
