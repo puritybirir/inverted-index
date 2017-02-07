@@ -2,3 +2,4 @@ jasmine/spec/**
 src/js/controllers/**
 src/js/app.js
 ./karma.conf.js
+./gulpfile.js
