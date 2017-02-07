@@ -27,7 +27,7 @@
  }
  ];
 
- const invalidJson = ['njhj'];
+ const invalidJson = "key Alice in Wonderland value Alice falls into a rabbit hole and enters a world full of imagination.";
 
  const emptyJson = '';
 
@@ -40,7 +40,7 @@
 
    describe('Check Input data', () => {
      it('assert that the file is parsed correctly', () => {
-       expect(index.validJson('myDoc', JSON.stringify(myDoc))).toBe('File Uploaded');
+       expect(index.validJson('myDoc', JSON.stringify(myDoc))).toBe('Correct file');
      });
 
      it('tests for an empty file', () => {
@@ -52,46 +52,46 @@
      });
 
      it('Checks for an invalid Json file', () => {
-       expect(index.validJson('invalidJson', invalidJson)).toBe('Invalid Json file');
+       expect(index.validJson('invalidJson', invalidJson)).toBe('Invalid JSON file');
      });
    });
 
    describe('Read book data', () => {
      beforeEach(() => {
-       index.createIndex('myDoc', myDoc);
+       index.createIndex('myDoc', JSON.stringify(myDoc));
      });
 
      it('assert JSON file is not empty', () => {
-       expect(index.getIndex(myDoc)).toBeTruthy();
+       expect(index.getIndex('myDoc')).not.toBe(null);
      });
 
      it('checks that JSON file is valid', () => {
-       expect(index.getIndex(myDoc)).toBeTruthy();
+       expect(index.getIndex('myDoc')).toBeTruthy();
      });
    });
 
    describe('Populate Index', () => {
      beforeEach(() => {
-       index.createIndex('myDoc', myDoc);
-       index.createIndex('myDoc2', myDoc2);
+       index.createIndex('myDoc', JSON.stringify(myDoc));
+       index.createIndex('myDoc2', JSON.stringify(myDoc2));
      });
 
      it('index should be created after reading', () => {
-       expect(index.getIndex(myDoc)).toBeTruthy();
+       expect(index.getIndex('myDoc')).toBeTruthy();
      });
 
      it('ensures a correct index is created', () => {
-       expect(index.getIndex(myDoc).myDoc.in).toEqual([0]);
-       expect(index.getIndex(myDoc).myDoc.of).toEqual([0, 1]);
-       expect(index.getIndex(myDoc).myDoc.lord).toEqual([1]);
-       expect(index.getIndex(myDoc).myDoc.alice).toEqual([0]);
+       expect(index.getIndex('myDoc').in).toEqual([0]);
+       expect(index.getIndex('myDoc').of).toEqual([0, 1]);
+       expect(index.getIndex('myDoc').lord).toEqual([1]);
+       expect(index.getIndex('myDoc').alice).toEqual([0]);
      });
 
      it('ensures an index is not overwritten by new JSON file', () => {
-       expect(index.getIndex(myDoc).myDoc.elf).toEqual([1]);
-       expect(index.getIndex(myDoc).myDoc.rabbit).toEqual([0]);
-       expect(index.getIndex(myDoc2).myDoc2.infinities).toEqual([0]);
-       expect(index.getIndex(myDoc2).myDoc2.alchemist).toEqual([1]);
+       expect(index.getIndex('myDoc').elf).toEqual([1]);
+       expect(index.getIndex('myDoc').rabbit).toEqual([0]);
+       expect(index.getIndex('myDoc2').infinities).toEqual([0]);
+       expect(index.getIndex('myDoc2').alchemist).toEqual([1]);
      });
    });
 
@@ -104,8 +104,8 @@
      let searchAllData;
 
      beforeEach(() => {
-       index.createIndex('myDoc', myDoc);
-       index.createIndex('myDoc2', myDoc2);
+       index.createIndex('myDoc', JSON.stringify(myDoc));
+       index.createIndex('myDoc2', JSON.stringify(myDoc2));
        getData = index.searchIndex('myDoc', 'wonderland');
        correctData = index.searchIndex('myDoc', 'alice');
        multipleData = index.searchIndex('myDoc', 'a alice elf dwarf hole');
@@ -140,7 +140,7 @@
          });
      });
 
-     it('Ensures it can search an array an arrays', () => {
+     it('Ensures it can search an array of arrays', () => {
        expect(multipleArrayData)
          .toEqual({
            myDoc2: {
