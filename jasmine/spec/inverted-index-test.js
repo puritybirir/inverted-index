@@ -24,7 +24,7 @@
    {
    "key": "Alice in Wonderland",
    "value": "Alice falls into a rabbit hole and enters a world full of imagination."
- }
+  }
  ];
 
  const invalidJson = '[ \
@@ -40,12 +40,12 @@
 
  let index;
 
- describe('Inverted index', () => {
+ describe('Inverted Index', () => {
    beforeEach(() => {
      index = new Index();
    });
 
-   describe('Read book data', () => {
+   describe('Read Book Data', () => {
      it('asserts JSON file is not empty', () => {
        expect(index.createIndex('emptyJson', emptyJson)).toBe('Empty file');
      });
@@ -61,7 +61,6 @@
      it('asserts that error is returned if the file is wrong', () => {
        expect(index.createIndex('wrongJson',JSON.stringify(wrongJson))).toBe('No title or text');
      });
-
    });
 
    describe('Populate Index', () => {
