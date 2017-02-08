@@ -20,7 +20,7 @@ class Index {
    *
    * Validates the file input
    *
-   * @param {string} filename - Name of the file
+   * @param {object} file - Content of the file
    * @return {string}
    */
   validateJson(file) {
@@ -45,7 +45,7 @@ class Index {
    * Tokenizes data
    *
    * @param {string}
-   * @return {object}
+   * @return {array}
    */
   cleanData(data) {
     const terms = (data)
@@ -74,7 +74,7 @@ class Index {
    * appear twice in the created array.
    *
    * @param {array}
-   * @return {object}
+   * @return {array}
    */
   getUniqueTerms(terms) {
     return terms.filter((value, index, arr) => arr.indexOf(value) === index);
