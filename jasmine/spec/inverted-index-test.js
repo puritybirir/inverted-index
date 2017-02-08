@@ -27,9 +27,16 @@
  }
  ];
 
- const invalidJson = "key Alice in Wonderland value Alice falls into a rabbit hole and enters a world full of imagination.";
+ const invalidJson = '[ \
+   {"title": "Alice in Wonderland", \
+    "text": "Alice falls into a rabbit hole and enters a world full of imagination." \
+  }, \
+  { \
+    "title": "The Lord of the Rings: The Fellowship of the Ring.", \
+    "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring." \
+  }';
 
- const emptyJson = '';
+ const emptyJson =[];
 
  let index;
 
@@ -38,24 +45,21 @@
      index = new Index();
    });
 
-   describe('Check Input data', () => {
-     it('assert that the file is parsed correctly', () => {
-       expect(index.validJson('myDoc', JSON.stringify(myDoc))).toBe('Correct file');
-     });
-
-     it('assert that error is returned if the file is wrong', () => {
-       expect(index.validJson('wrongJson', JSON.stringify(wrongJson))).toBe('No title or text');
-     });
-
-   });
-
    describe('Read book data', () => {
-     it('assert JSON file is not empty', () => {
-       expect(index.validJson('emptyJson', emptyJson)).toBe('Empty file');
+     it('asserts JSON file is not empty', () => {
+       expect(index.createIndex('emptyJson', emptyJson)).toBe('Empty file');
      });
 
-     it('Checks for an invalid Json file', () => {
-       expect(index.validJson('invalidJson', invalidJson)).toBe('Invalid JSON file');
+     it('checks for an invalid Json file', () => {
+       expect(index.createIndex('invalidJson',invalidJson)).toBe('Invalid JSON file');
+      });
+
+     it('asserts that the file is parsed correctly', () => {
+       expect(index.createIndex('myDoc', JSON.stringify(myDoc))).toBe('Correct file');
+     });
+
+     it('asserts that error is returned if the file is wrong', () => {
+       expect(index.createIndex('wrongJson',JSON.stringify(wrongJson))).toBe('No title or text');
      });
 
    });
@@ -85,7 +89,7 @@
      });
    });
 
-   describe('searchIndex', () => {
+   describe('Search Index', () => {
      let getData;
      let correctData;
      let multipleData;
@@ -104,20 +108,20 @@
        searchAllData = index.searchIndex('All', 'of');
      });
 
-     it('Searches for a particular word', () => {
+     it('searches for a particular word', () => {
        expect(getData).toEqual({ myDoc: { wonderland: [0] } });
      });
 
-     it('Finds the correct index of word input', () => {
+     it('finds the correct index of word input', () => {
        expect(correctData).toEqual({ myDoc: { alice: [0] } });
      });
 
-     it('Ensures searchIndex can handle a varied number of searchterms as arguments', () => {
+     it('ensures searchIndex can handle a varied number of searchterms as arguments', () => {
        expect(multipleData)
          .toEqual({ myDoc: { a: [0, 1], alice: [0], elf: [1], dwarf: [1], hole: [0] } });
      });
 
-     it('Ensures it can search an array', () => {
+     it('ensures it can search an array', () => {
        expect(arrayData)
          .toEqual({
            myDoc2: {
@@ -130,7 +134,7 @@
          });
      });
 
-     it('Ensures it can search an array of arrays', () => {
+     it('ensures it can search an array of arrays', () => {
        expect(multipleArrayData)
          .toEqual({
            myDoc2: {
@@ -144,7 +148,7 @@
          });
      });
 
-     it('Searches all indexed files ', () => {
+     it('searches all indexed files ', () => {
        expect(searchAllData).toEqual({
          myDoc: { of: [0, 1] },
          myDoc2: { of: [1] },
