@@ -69,7 +69,8 @@ class Index {
   /**
    * getUniqueTerms
    *
-   * Gets the unique terms.
+   * Gets the unique terms by ensuring none of the terms are repeated for example "alice" does not
+   * appear twice in the created array.
    *
    * @param {array}
    * @return {object}
@@ -81,7 +82,7 @@ class Index {
   /**
    * getValues
    *
-   * Gets the values for each of the terms.
+   * Gets the values for each of the terms that show in which object the term is found.
    *
    * @param {object}
    * @param {string}
@@ -154,7 +155,7 @@ class Index {
    *
    * @param {string}
    * @param {string}
-   * @preturn {object}
+   * @return {object}
    */
   getResult(items, filename) {
     const fileResult = {};
@@ -171,7 +172,7 @@ class Index {
   /**
    * searchIndex
    *
-   * Searches the created Index
+   * Implements a full text search on the created Index using the getResult method.
    *
    * @param {string}
    * @param {array}
