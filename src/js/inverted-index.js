@@ -1,11 +1,13 @@
 /**
- * InvertedIndex Class
+ * Index Class
+ *
  * @class
  */
 class Index {
 
   /**
    * class constructor
+   *
    * @constructor
    */
   constructor() {
@@ -14,15 +16,14 @@ class Index {
   }
 
   /**
-   * validJson
+   * validateJson
    *
    * Validates the file input
    *
    * @param {string} filename - Name of the file
-   * @param {object} file - Content of the file
    * @return {string}
    */
-  validJson(filename, file) {
+  validateJson(file) {
     if (!file.length) {
       return 'Empty file';
     }
@@ -112,8 +113,8 @@ class Index {
    * @param {string}
    */
   createIndex(filename, content) {
-    const valid = this.validJson(filename, content);
-    if (valid === 'Correct file') {
+    const message = this.validateJson(content);
+    if (message === 'Correct file') {
       const jsonData = JSON.parse(content);
       if (jsonData != null) {
         let indexTerms = [];
@@ -129,10 +130,10 @@ class Index {
           index[indexTerm] = objArray;
         });
         this.indexObject[filename] = index;
-        return valid;
+        return message;
       }
     } else {
-      return valid;
+      return message;
     }
   }
 
