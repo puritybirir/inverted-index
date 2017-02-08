@@ -43,31 +43,21 @@
        expect(index.validJson('myDoc', JSON.stringify(myDoc))).toBe('Correct file');
      });
 
-     it('tests for an empty file', () => {
-       expect(index.validJson('emptyJson', emptyJson)).toBe('Empty file');
-     });
-
      it('assert that error is returned if the file is wrong', () => {
        expect(index.validJson('wrongJson', JSON.stringify(wrongJson))).toBe('No title or text');
+     });
+
+   });
+
+   describe('Read book data', () => {
+     it('assert JSON file is not empty', () => {
+       expect(index.validJson('emptyJson', emptyJson)).toBe('Empty file');
      });
 
      it('Checks for an invalid Json file', () => {
        expect(index.validJson('invalidJson', invalidJson)).toBe('Invalid JSON file');
      });
-   });
 
-   describe('Read book data', () => {
-     beforeEach(() => {
-       index.createIndex('myDoc', JSON.stringify(myDoc));
-     });
-
-     it('assert JSON file is not empty', () => {
-       expect(index.getIndex('myDoc')).not.toBe(null);
-     });
-
-     it('checks that JSON file is valid', () => {
-       expect(index.getIndex('myDoc')).toBeTruthy();
-     });
    });
 
    describe('Populate Index', () => {
