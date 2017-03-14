@@ -33,6 +33,12 @@
 * EcmaScript 6 (JavaScript 2015)
 * Gulp (Task Runner)
 
+## How can this be viewed manually?
+
+https://andela-pbirir.github.io/inverted-index/
+
+
+
 
 
 
