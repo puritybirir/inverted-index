@@ -36,7 +36,7 @@
 
 ## How can this be viewed manually?
 
-https://andela-pbirir.github.io/inverted-index/
+https://puritybirir.github.io/inverted-index/
 
 
 
